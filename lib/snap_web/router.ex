@@ -19,8 +19,6 @@ defmodule SnapWeb.Router do
 
   scope "/", SnapWeb do
     pipe_through :browser
-
-    get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -63,6 +61,7 @@ defmodule SnapWeb.Router do
 
   scope "/", SnapWeb do
     pipe_through [:browser, :require_authenticated_user]
+    live "/", HomeLive.Index
 
     live_session :require_authenticated_user,
       on_mount: [{SnapWeb.UserAuth, :ensure_authenticated}] do

@@ -11,6 +11,9 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
+  lucide-svelte:
+    specifier: ^0.312.0
+    version: 0.312.0(svelte@4.2.9)
   tailwind:
     specifier: ^4.0.0
     version: 4.0.0
@@ -2150,6 +2153,14 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /lucide-svelte@0.312.0(svelte@4.2.9):
+    resolution: {integrity: sha512-FB5e+oU4Hue8/OiRCx4zur7sdve27pQ5F9JnfYGRlVK8fFkaZQManwn8QvW9a5yr2Z/DJNdyeDmBp5afN7Pdkg==}
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      svelte: 4.2.9
+    dev: false
 
   /lusca@1.6.1:
     resolution: {integrity: sha512-+JzvUMH/rsE/4XfHdDOl70bip0beRcHSviYATQM0vtls59uVtdn1JMu4iD7ZShBpAmFG8EnaA+PrYG9sECMIOQ==}

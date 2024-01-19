@@ -20,4 +20,9 @@ defmodule SnapWeb.HomeLive.Index do
     # IO.inspect(user)
     true
   end
+
+  def render(assigns) do
+    ~H"""
+    """
+  end
 end

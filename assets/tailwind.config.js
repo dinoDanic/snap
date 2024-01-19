@@ -3,8 +3,6 @@
 
 import { fontFamily } from "tailwindcss/defaultTheme";
 // /** @type {import('tailwindcss').Config} */
-// const config = {};
-// export default config;
 
 const plugin = require("tailwindcss/plugin");
 const fs = require("fs");
@@ -16,7 +14,6 @@ module.exports = {
     "../lib/snap_web.ex",
     "../lib/snap_web/**/*.*ex",
     "./svelte/**/*.svelte",
-    "./src/**/*.{html,js,svelte,ts}",
     "./src/**/*.{html,js,svelte,ts}",
   ],
   darkMode: ["class"],

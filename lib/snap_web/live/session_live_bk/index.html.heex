@@ -29,7 +29,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="session-modal" show on_cancel={JS.patch(~p"/sessions")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="session-modal"
+  show
+  on_cancel={JS.patch(~p"/sessions")}
+>
   <.live_component
     module={SnapWeb.SessionLive.FormComponent}
     id={@session.id || :new}

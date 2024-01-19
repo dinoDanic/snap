@@ -1,11 +1,9 @@
 defmodule SnapWeb.HomeLive.Index do
   alias Hex.API.User
   use SnapWeb, :live_view
+  use LiveSvelte.Components
 
   def mount(_params, _session, socket) do
-    IO.puts(~c"ovo je socket u rootu")
-    IO.inspect(socket)
-
     user = socket.assigns.current_user
 
     hasSession = check_if_user_has_sessions(user)
@@ -19,7 +17,7 @@ defmodule SnapWeb.HomeLive.Index do
   end
 
   defp check_if_user_has_sessions(user) do
-    IO.inspect(user)
+    # IO.inspect(user)
     true
   end
 end

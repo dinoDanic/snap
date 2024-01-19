@@ -5,9 +5,6 @@ defmodule SnapWeb.SessionLiveBK.FormComponent do
 
   @impl true
   def render(assigns) do
-    IO.puts(~c"OVOOOOOOOOOOOOO")
-    IO.inspect(assigns)
-
     ~H"""
     <div>
       <.header>

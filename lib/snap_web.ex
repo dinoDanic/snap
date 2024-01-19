@@ -92,6 +92,9 @@ defmodule SnapWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
+
+      # LiveSvelte 
+      import LiveSvelte
     end
   end
 

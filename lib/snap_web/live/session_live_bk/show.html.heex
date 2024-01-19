@@ -14,7 +14,12 @@
 
 <.back navigate={~p"/sessions"}>Back to sessions</.back>
 
-<.modal :if={@live_action == :edit} id="session-modal" show on_cancel={JS.patch(~p"/sessions/#{@session}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="session-modal"
+  show
+  on_cancel={JS.patch(~p"/sessions/#{@session}")}
+>
   <.live_component
     module={SnapWeb.SessionLive.FormComponent}
     id={@session.id}

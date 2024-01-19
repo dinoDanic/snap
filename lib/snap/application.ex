@@ -8,6 +8,7 @@ defmodule Snap.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {NodeJS.Supervisor, [path: LiveSvelte.SSR.NodeJS.server_path(), pool_size: 4]},
       SnapWeb.Telemetry,
       Snap.Repo,
       {DNSCluster, query: Application.get_env(:snap, :dns_cluster_query) || :ignore},

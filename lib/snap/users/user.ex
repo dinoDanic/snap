@@ -8,6 +8,8 @@ defmodule Snap.Users.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    many_to_many :sessions, Snap.Sessions.Session, join_through: Snap.SessionsUsers.SessionUser
+
     timestamps(type: :utc_datetime)
   end
 

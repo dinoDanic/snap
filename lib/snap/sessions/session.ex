@@ -1,0 +1,29 @@
+defmodule Snap.Sessions.Session do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  schema "sessions" do
+    field :name, :string
+
+    belongs_to :admin, Snap.Users.User
+
+    many_to_many :users, Snap.Users.User, join_through: Snap.SessionsUsers.SessionUser
+
+    timestamps(type: :utc_datetime)
+  end
+
+  @doc false
+  def changeset(session, attrs) do
+    session
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+  end
+
+  def create_changeset(session, attrs, user) do
+    session
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+    |> Ecto.Changeset.cast_assoc(:admin, user)
+    |> Ecto.Changeset.put_assoc(:users, [user])
+  end
+end

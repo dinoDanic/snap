@@ -61,12 +61,18 @@ defmodule SnapWeb.Router do
 
   scope "/", SnapWeb do
     pipe_through [:browser, :require_authenticated_user]
-    live "/", HomeLive.Index
 
     live_session :require_authenticated_user,
       on_mount: [{SnapWeb.UserAuth, :ensure_authenticated}] do
+      live "/", HomeLive.Index
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+      # live "/sessions", SessionLive.Index, :index
+      # live "/sessions/new", SessionLive.Index, :new
+      # live "/sessions/:id/edit", SessionLive.Index, :edit
+      # live "/sessions/:id", SessionLive.Show, :show
+      # live "/sessions/:id/show/edit", SessionLive.Show, :edit
     end
   end
 

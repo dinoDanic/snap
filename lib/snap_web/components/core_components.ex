@@ -19,6 +19,14 @@ defmodule SnapWeb.CoreComponents do
   alias Phoenix.LiveView.JS
   import SnapWeb.Gettext
 
+  def card(assigns) do
+    ~H"""
+    <div class="rounded-md p-14 border bg-primary text-card-foreground shadow-sm space-y-m">
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
   @doc """
   Renders a modal.
 

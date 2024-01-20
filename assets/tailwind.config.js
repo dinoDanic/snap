@@ -1,9 +1,10 @@
 // See the Tailwind configuration guide for advanced usage
 // https://tailwindcss.com/docs/configuration
+import { spacing } from "./css/spacing";
 
 import { fontFamily } from "tailwindcss/defaultTheme";
-// /** @type {import('tailwindcss').Config} */
 
+// /** @type {import('tailwindcss').Config} */
 const plugin = require("tailwindcss/plugin");
 const fs = require("fs");
 const path = require("path");
@@ -27,6 +28,7 @@ module.exports = {
       },
     },
     extend: {
+      spacing,
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",

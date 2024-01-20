@@ -1,0 +1,13 @@
+<.flash_group flash={@flash} />
+<div class="grid h-[100vh] grid-cols-1 grid-rows-[1fr_20px] overflow-auto p-1">
+  <div>
+    <%= @inner_content %>
+  </div>
+  <div>
+    <%= for session <- @sessions do %>
+      <button phx-click="change_session" data-session-id="2">
+        <%= session.id %>
+      </button>
+    <% end %>
+  </div>
+</div>

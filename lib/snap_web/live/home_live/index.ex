@@ -1,28 +1,41 @@
 defmodule SnapWeb.HomeLive.Index do
-  alias Hex.API.User
+  alias Snap.Users.User
+  alias Snap.Repo
   use SnapWeb, :live_view
   use LiveSvelte.Components
 
   def mount(_params, _session, socket) do
-    user = socket.assigns.current_user
+    assigned_user = socket.assigns.current_user
 
-    hasSession = check_if_user_has_sessions(user)
+    result = check_if_user_has_sessions(assigned_user)
 
-    case hasSession do
-      true -> IO.puts(~c"ima")
-      false -> IO.puts(~c"nema")
+    case result do
+      true ->
+        {:ok, socket}
+
+      false ->
+        {:ok, push_navigate(socket, to: "/session/new")}
     end
-
-    {:ok, socket}
   end
 
-  defp check_if_user_has_sessions(user) do
-    # IO.inspect(user)
-    true
+  defp check_if_user_has_sessions(assigned_user) do
+    user = Repo.get(User, assigned_user.id)
+
+    case Repo.preload(user, :sessions) do
+      %User{sessions: sessions} when length(sessions) > 0 -> true
+      _ -> false
+    end
   end
 
   def render(assigns) do
     ~H"""
+
     """
   end
+
+  def handle_event("continue", _, socket) do
+    {:noreply, push_navigate(socket, to: "/session/new")}
+  end
 end
+
+# <.svelte name="sessions/new_session" />

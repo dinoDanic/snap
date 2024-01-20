@@ -15,13 +15,15 @@
   "dependencies": {
     "bits-ui": "^0.14.0",
     "clsx": "^2.1.0",
+    "formsnap": "^0.4.2",
     "live_svelte": "file:../deps/live_svelte",
     "lucide-svelte": "^0.312.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view",
-    "tailwind": "^4.0.0",
     "tailwind-merge": "^2.2.0",
-    "tailwind-variants": "^0.1.20"
+    "tailwind-variants": "^0.1.20",
+    "tailwindcss": "^3.4.1",
+    "zod": "^3.22.4"
   }
 }

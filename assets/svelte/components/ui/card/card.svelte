@@ -1,16 +1,28 @@
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-	import { cn } from "$lib/utils";
+  import { cn } from "$lib/utils";
 
-	type $$Props = HTMLAttributes<HTMLDivElement>;
-
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+  export let className: string = undefined;
+  export let title: string = undefined;
+  export let description: string = undefined;
 </script>
 
 <div
-	class={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
-	{...$$restProps}
+  class={cn(
+    "rounded-md p-md border bg-card text-card-foreground shadow-sm space-y-md",
+    className,
+  )}
 >
-	<slot />
+  {#if title || description}
+    <div class="space-y-xs">
+      {#if title}
+        <h4>{title}</h4>
+      {/if}
+      {#if description}
+        <p class="text-muted-foreground">{description}</p>
+      {/if}
+    </div>
+  {/if}
+  <div>
+    <slot />
+  </div>
 </div>

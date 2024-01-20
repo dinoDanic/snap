@@ -58,6 +58,15 @@ defmodule SnapWeb do
     end
   end
 
+  def session_live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {SnapWeb.Layouts, :session}
+
+      unquote(html_helpers())
+    end
+  end
+
   def live_component do
     quote do
       use Phoenix.LiveComponent
@@ -93,7 +102,6 @@ defmodule SnapWeb do
       # Routes generation with the ~p sigil
       unquote(verified_routes())
 
-      # LiveSvelte 
       import LiveSvelte
     end
   end

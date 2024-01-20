@@ -4,9 +4,17 @@ defmodule Snap.Sessions do
   """
 
   import Ecto.Query, warn: false
+  alias Snap.Users
+  alias Snap.Users.User
   alias Snap.Repo
 
   alias Snap.Sessions.Session
+
+  def get_user_sessions(user_id) do
+    user = Users.get_user!(user_id) |> Repo.preload(:sessions)
+    IO.inspect(user)
+    user.sessions
+  end
 
   @doc """
   Returns the list of sessions.
@@ -50,7 +58,9 @@ defmodule Snap.Sessions do
 
   """
 
-  def create_session(attrs, user) do
+  def create_session(attrs, user_id) do
+    user = Users.get_user!(user_id)
+
     %Session{}
     |> Session.create_changeset(attrs, user)
     |> Ecto.Changeset.put_assoc(:admin, user)

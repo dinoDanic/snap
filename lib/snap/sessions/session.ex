@@ -19,11 +19,12 @@ defmodule Snap.Sessions.Session do
     |> validate_required([:name])
   end
 
-  def create_changeset(session, attrs, user) do
+  def create_changeset(session, attrs \\ %{}, user \\ %{}) do
     session
     |> cast(attrs, [:name])
     |> validate_required([:name])
-    |> Ecto.Changeset.cast_assoc(:admin, user)
-    |> Ecto.Changeset.put_assoc(:users, [user])
+
+    # |> Ecto.Changeset.cast_assoc(:admin, user)
+    # |> Ecto.Changeset.put_assoc(:users, [user])
   end
 end

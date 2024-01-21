@@ -1,7 +1,8 @@
 defmodule SnapWeb.SessionLive.Show do
-  alias Snap.Sessions
   use SnapWeb, :session_live_view
   use LiveSvelte.Components
+
+  alias Snap.Sessions
 
   @impl true
   def render(assigns) do
@@ -14,6 +15,8 @@ defmodule SnapWeb.SessionLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    # if connected?(socket), do: Phoenix.PubSub.subscribe(Snap.PubSub, "sessions")
+
     user = socket.assigns.current_user
     sessions = Sessions.get_user_sessions(user.id)
 
@@ -38,6 +41,13 @@ defmodule SnapWeb.SessionLive.Show do
   end
 
   @impl true
+  def handle_event("invite_session", %{"email" => email}, socket) do
+    session_id = socket.assigns.active_session.id
+    Sessions.invite_user_to_session(email, session_id)
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("change_session", %{"session_id" => session_id}, socket) do
     {:noreply, push_patch(socket, to: "/session/#{session_id}")}
   end
@@ -56,18 +66,24 @@ defmodule SnapWeb.SessionLive.Show do
     end
   end
 
+  @impl true
   def handle_event("create_session", _unsigned_params, socket) do
     user = socket.assigns.current_user
 
-    case(Sessions.create_session(%{name: "new session"}, user.id)) do
+    case Sessions.create_session(%{name: "new session"}, user.id) do
       {:ok, session} ->
         {:noreply, push_patch(socket, to: "/session/#{session.id}")}
     end
   end
 
-  def handle_event("invite_session", %{"email" => email}, socket) do
-    session_id = socket.assigns.active_session.id
-    Sessions.invite_user_to_session(email, session_id)
-    {:noreply, socket}
+  @impl true
+  def handle_info({:new, session}, socket) do
+    user = socket.assigns.user
+    IO.inspect(user.email)
+    IO.puts(~c"ovo je novo right?")
+    {:noreply, update(socket, :sessions, fn sessions -> [sessions | session] end)}
+    # {:noreply, socket}
   end
 end
+
+# Phoenix.PubSub.broadcast(Snap.PubSub, "sessions", {:new, session})

@@ -3,7 +3,6 @@ defmodule Snap.Sessions do
   The Sessions context.
   """
   alias Snap.SessionsUsers.SessionUser
-  alias Snap.SessionsUsers
 
   import Ecto.Query, warn: false
   alias Snap.Sessions
@@ -102,6 +101,8 @@ defmodule Snap.Sessions do
     |> Ecto.Changeset.put_assoc(:admin, user)
     |> Ecto.Changeset.put_assoc(:users, [user])
     |> Repo.insert()
+
+    # |> broadcast(:session_created)
   end
 
   @doc """

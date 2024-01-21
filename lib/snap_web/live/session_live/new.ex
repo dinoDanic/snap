@@ -30,7 +30,6 @@ defmodule SnapWeb.SessionLive.New do
   end
 
   def handle_event("create", session, socket) do
-    IO.inspect(session)
     %{"name" => name} = session
     # %{"session" => %{"name" => name}} = session
     {:noreply, socket}

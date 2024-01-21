@@ -10,10 +10,11 @@ defmodule SnapWeb.HomeLive.Index do
     result = check_if_user_has_sessions(assigned_user)
 
     case result do
-      true ->
-        {:ok, socket}
+      {true, sessions} ->
+        [first | _rest] = sessions
+        {:ok, push_navigate(socket, to: "/session/#{first.id}")}
 
-      false ->
+      {false} ->
         {:ok, push_navigate(socket, to: "/session/new")}
     end
   end
@@ -22,8 +23,8 @@ defmodule SnapWeb.HomeLive.Index do
     user = Repo.get(User, assigned_user.id)
 
     case Repo.preload(user, :sessions) do
-      %User{sessions: sessions} when length(sessions) > 0 -> true
-      _ -> false
+      %User{sessions: sessions} when length(sessions) > 0 -> {true, sessions}
+      _ -> {false}
     end
   end
 
@@ -37,5 +38,3 @@ defmodule SnapWeb.HomeLive.Index do
     {:noreply, push_navigate(socket, to: "/session/new")}
   end
 end
-
-# <.svelte name="sessions/new_session" />

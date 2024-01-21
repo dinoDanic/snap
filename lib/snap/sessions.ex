@@ -12,7 +12,6 @@ defmodule Snap.Sessions do
 
   def get_user_sessions(user_id) do
     user = Users.get_user!(user_id) |> Repo.preload(:sessions)
-    IO.inspect(user)
     user.sessions
   end
 

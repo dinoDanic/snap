@@ -7,7 +7,6 @@ defmodule SnapWeb.SessionLiveBK.Index do
   @impl true
   def mount(_params, _session, socket) do
     # user = socket.assigns.current_user
-    # IO.inspect(user)
     {:ok, stream(socket, :sessions, Sessions.list_sessions())}
   end
 

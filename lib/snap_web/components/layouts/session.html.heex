@@ -4,10 +4,6 @@
     <%= @inner_content %>
   </div>
   <div>
-    <%= for session <- @sessions do %>
-      <button phx-click="change_session" data-session-id="2">
-        <%= session.id %>
-      </button>
-    <% end %>
+    <.svelte name="sessions/layout" props={%{sessions: @sessions, active_session: @active_session}} />
   </div>
 </div>

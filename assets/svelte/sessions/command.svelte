@@ -5,6 +5,7 @@
   import { Live } from "live_svelte";
   import DeleteSession from "./events/delete-session.svelte";
   import InviteSession from "./events/invite-session.svelte";
+  import ListSessions from "./events/list-sessions.svelte";
 
   export let open = false;
   export let live: Live;
@@ -37,35 +38,41 @@
       live.pushEvent("create_session");
     });
   }
+
   function deleteSession() {
     runCommand(() => {
       live.pushEvent("delete_session");
     });
   }
+
   function inviteSession(email: string) {
     runCommand(() => {
       live.pushEvent("invite_session", { email: email });
     });
   }
+
+  function listSessions() {
+    runCommand(() => {
+      live.pushEvent("list_sessions");
+    });
+  }
 </script>
 
-<Command.Dialog bind:open on:select={() => console.log("kita")}>
-  <Command.Input
-    class="border-none outline-none focus:outline-none focus:ring-transparent focus:shadow-none focus:border-none"
-    placeholder="Type a command or search..."
-  />
+<Command.Dialog bind:open>
+  <Command.Input placeholder="Type a command or search..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
     <Command.Group heading="Current Session">
       <DeleteSession {deleteSession} />
       <InviteSession {inviteSession} />
     </Command.Group>
-    <!-- <Command.Separator /> -->
+    <Command.Separator />
     <Command.Group heading="Session">
       <Command.Item onSelect={createSession}>
         <GridIcon class="mr-2 h-4 w-4" />
         <span>New</span>
       </Command.Item>
+      <ListSessions {listSessions} />
     </Command.Group>
   </Command.List>
 </Command.Dialog>

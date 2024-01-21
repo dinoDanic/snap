@@ -2,30 +2,16 @@
   import { Live } from "live_svelte";
   import { isStringANumber } from "../helpers/numbers";
   import Item from "./item.svelte";
-  import { Button } from "$lib/components/ui/button";
-  import { MenuIcon, PlusIcon } from "lucide-svelte";
+  import { MenuIcon } from "lucide-svelte";
   import Command from "./command.svelte";
   import { onMount } from "svelte";
+  import { Session } from "$lib/types";
 
-  export let sessions: { id: number; name: string }[] = [];
-  export let active_session: { id: number; name: string };
+  export let sessions: Session[] = [];
+  export let active_session: Session;
   export let live: Live;
 
   let open = false;
-
-  // const _onkeyDown = (e: KeyboardEvent) => {
-  //   const { key } = e;
-  //   if (isStringANumber(key)) {
-  //     const keyIndex = Number(key) - 1;
-  //     const findSession = sessions.at(keyIndex);
-  //     if (findSession) {
-  //       live.pushEvent("change_session", { session_id: findSession.id });
-  //     }
-  //     //
-  //   } else {
-  //     //
-  //   }
-  // };
 
   onMount(() => {
     function handleKeydown(e: KeyboardEvent) {

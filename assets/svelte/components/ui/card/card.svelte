@@ -8,7 +8,7 @@
 
 <div
   class={cn(
-    "rounded-md p-md border bg-card text-card-foreground shadow-sm space-y-md",
+    "rounded-md p-md border bg-card text-card-foreground shadow-sm space-y-md w-full",
     className,
   )}
 >

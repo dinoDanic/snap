@@ -68,22 +68,22 @@ defmodule SnapWeb.SessionLive.Show do
 
   @impl true
   def handle_event("create_session", _unsigned_params, socket) do
-    user = socket.assigns.current_user
-
-    case Sessions.create_session(%{name: "new session"}, user.id) do
-      {:ok, session} ->
-        {:noreply, push_patch(socket, to: "/session/#{session.id}")}
-    end
+    {:noreply, push_navigate(socket, to: "/session/new")}
   end
 
   @impl true
-  def handle_info({:new, session}, socket) do
-    user = socket.assigns.user
-    IO.inspect(user.email)
-    IO.puts(~c"ovo je novo right?")
-    {:noreply, update(socket, :sessions, fn sessions -> [sessions | session] end)}
-    # {:noreply, socket}
+  def handle_event("list_sessions", _unsigned_params, socket) do
+    {:noreply, push_navigate(socket, to: "/session/list")}
   end
 end
 
 # Phoenix.PubSub.broadcast(Snap.PubSub, "sessions", {:new, session})
+
+# @impl true
+# def handle_info({:new, session}, socket) do
+#   user = socket.assigns.user
+#   IO.inspect(user.email)
+#   IO.puts(~c"ovo je novo right?")
+#   {:noreply, update(socket, :sessions, fn sessions -> [sessions | session] end)}
+#   # {:noreply, socket}
+# end

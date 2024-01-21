@@ -72,6 +72,7 @@ defmodule SnapWeb.Router do
 
       # sessions
       live "/session", SessionLive.Index
+      live "/session/list", SessionLive.List
       live "/session/new", SessionLive.New
       live "/session/:id", SessionLive.Show
     end

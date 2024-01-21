@@ -1,0 +1,41 @@
+<.header>
+  Listing Panes
+  <:actions>
+    <.link patch={~p"/panes/new"}>
+      <.button>New Pane</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="panes"
+  rows={@streams.panes}
+  row_click={fn {_id, pane} -> JS.navigate(~p"/panes/#{pane}") end}
+>
+  <:col :let={{_id, pane}} label="Name"><%= pane.name %></:col>
+  <:action :let={{_id, pane}}>
+    <div class="sr-only">
+      <.link navigate={~p"/panes/#{pane}"}>Show</.link>
+    </div>
+    <.link patch={~p"/panes/#{pane}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, pane}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: pane.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="pane-modal" show on_cancel={JS.patch(~p"/panes")}>
+  <.live_component
+    module={SnapWeb.PaneLive.FormComponent}
+    id={@pane.id || :new}
+    title={@page_title}
+    action={@live_action}
+    pane={@pane}
+    patch={~p"/panes"}
+  />
+</.modal>

@@ -1,0 +1,26 @@
+<.header>
+  Window <%= @window.id %>
+  <:subtitle>This is a window record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/windows/#{@window}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit window</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @window.name %></:item>
+</.list>
+
+<.back navigate={~p"/windows"}>Back to windows</.back>
+
+<.modal :if={@live_action == :edit} id="window-modal" show on_cancel={JS.patch(~p"/windows/#{@window}")}>
+  <.live_component
+    module={SnapWeb.WindowLive.FormComponent}
+    id={@window.id}
+    title={@page_title}
+    action={@live_action}
+    window={@window}
+    patch={~p"/windows/#{@window}"}
+  />
+</.modal>

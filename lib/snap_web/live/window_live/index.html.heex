@@ -1,0 +1,41 @@
+<.header>
+  Listing Windows
+  <:actions>
+    <.link patch={~p"/windows/new"}>
+      <.button>New Window</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="windows"
+  rows={@streams.windows}
+  row_click={fn {_id, window} -> JS.navigate(~p"/windows/#{window}") end}
+>
+  <:col :let={{_id, window}} label="Name"><%= window.name %></:col>
+  <:action :let={{_id, window}}>
+    <div class="sr-only">
+      <.link navigate={~p"/windows/#{window}"}>Show</.link>
+    </div>
+    <.link patch={~p"/windows/#{window}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, window}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: window.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="window-modal" show on_cancel={JS.patch(~p"/windows")}>
+  <.live_component
+    module={SnapWeb.WindowLive.FormComponent}
+    id={@window.id || :new}
+    title={@page_title}
+    action={@live_action}
+    window={@window}
+    patch={~p"/windows"}
+  />
+</.modal>

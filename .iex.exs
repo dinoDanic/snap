@@ -5,3 +5,7 @@ alias Snap.Repo
 alias Snap.Users.User
 alias Snap.Sessions.{Session}
 alias Snap.Sessions
+alias Snap.Panes
+alias Snap.Windows
+alias Snap.Panes.Pane
+alias Snap.Windows.Window

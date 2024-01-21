@@ -15,6 +15,7 @@
   "dependencies": {
     "bits-ui": "^0.14.0",
     "clsx": "^2.1.0",
+    "cmdk-sv": "^0.0.13",
     "formsnap": "^0.4.2",
     "live_svelte": "file:../deps/live_svelte",
     "lucide-svelte": "^0.312.0",

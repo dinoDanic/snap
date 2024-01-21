@@ -18,7 +18,7 @@ defmodule SnapWeb.SessionLiveBK.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Session")
-    |> assign(:session, Sessions.get_session!(id))
+    |> assign(:session, Sessions.get_session(id))
   end
 
   defp apply_action(socket, :new, _params) do

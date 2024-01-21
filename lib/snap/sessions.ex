@@ -4,6 +4,7 @@ defmodule Snap.Sessions do
   """
 
   import Ecto.Query, warn: false
+  alias Snap.Sessions
   alias Snap.Users
   alias Snap.Users.User
   alias Snap.Repo
@@ -42,7 +43,7 @@ defmodule Snap.Sessions do
       ** (Ecto.NoResultsError)
 
   """
-  def get_session!(id), do: Repo.get!(Session, id)
+  def get_session(id), do: Repo.get(Session, id)
 
   @doc """
   Creates a session.
@@ -97,7 +98,8 @@ defmodule Snap.Sessions do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_session(%Session{} = session) do
+  def delete_session(session_id) do
+    session = get_session(session_id)
     Repo.delete(session)
   end
 

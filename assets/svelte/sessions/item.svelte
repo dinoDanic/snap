@@ -15,5 +15,5 @@
   >
     <p class="text-sm">{index}</p>
   </div>
-  <div>{session?.name}</div>
+  <div class="whitespace-nowrap">{session?.name}</div>
 </div>

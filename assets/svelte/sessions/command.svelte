@@ -6,6 +6,7 @@
   import DeleteSession from "./events/delete-session.svelte";
   import InviteSession from "./events/invite-session.svelte";
   import ListSessions from "./events/list-sessions.svelte";
+  import CreateWindow from "./events/create-window.svelte";
 
   export let open = false;
   export let live: Live;
@@ -56,12 +57,22 @@
       live.pushEvent("list_sessions");
     });
   }
+
+  function createWindow(window_name: string) {
+    runCommand(() => {
+      live.pushEvent("create_window", { window_name });
+    });
+  }
 </script>
 
 <Command.Dialog bind:open>
   <Command.Input placeholder="Type a command or search..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
+    <Command.Group heading="Windows">
+      <CreateWindow {createWindow} />
+    </Command.Group>
+    <Command.Separator />
     <Command.Group heading="Current Session">
       <DeleteSession {deleteSession} />
       <InviteSession {inviteSession} />

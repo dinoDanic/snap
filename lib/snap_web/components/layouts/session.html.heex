@@ -4,6 +4,9 @@
     <%= @inner_content %>
   </div>
   <div>
-    <.svelte name="sessions/layout" props={%{sessions: @sessions, active_session: @active_session}} />
+    <.svelte
+      name="sessions/layout"
+      props={%{windows: @windows, active_window_id: @active_window_id, active_session: @active_session }}
+    />
   </div>
 </div>

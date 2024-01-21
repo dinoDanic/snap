@@ -1,8 +1,9 @@
 <script lang="ts">
   import { cn } from "$lib/utils";
+  import type { Window } from "../types";
 
   export let isActive: boolean = false;
-  export let session: { id: number, name: string } | null = null;
+  export let windowItem: Window;
   export let index: number = 0;
 </script>
 
@@ -15,5 +16,5 @@
   >
     <p class="text-sm">{index}</p>
   </div>
-  <div class="whitespace-nowrap">{session?.name}</div>
+  <div class="whitespace-nowrap">{windowItem?.name}</div>
 </div>

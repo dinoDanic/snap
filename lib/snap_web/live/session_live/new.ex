@@ -1,4 +1,5 @@
 defmodule SnapWeb.SessionLive.New do
+  alias Snap.Windows
   alias Snap.Sessions
 
   use SnapWeb, :live_view
@@ -34,7 +35,16 @@ defmodule SnapWeb.SessionLive.New do
     #
     case(Sessions.create_session(%{name: name}, user.id)) do
       {:ok, session} ->
-        {:noreply, push_navigate(socket, to: "/session/#{session.id}")}
+        case(Windows.create_window(%{name: "welcome_window"}, session)) do
+          {:ok, window} ->
+            {:noreply, push_navigate(socket, to: "/session/#{session.id}/window/#{window.id}")}
+
+          {:error, _} ->
+            {:noreply, socket}
+
+          _ ->
+            {:noreply, socket}
+        end
 
       {:error, _changeset} ->
         # socket =
@@ -44,12 +54,7 @@ defmodule SnapWeb.SessionLive.New do
         {:noreply, socket}
 
       _ ->
-        IO.puts(~c"ah shit")
         {:noreply, socket}
     end
-  end
-
-  def handle_event("increment", _unsigned_params, socket) do
-    {:noreply, assign(socket, :number, socket.assigns.number + 1)}
   end
 end

@@ -11,6 +11,8 @@ defmodule Snap.Sessions.Session do
       join_through: Snap.SessionsUsers.SessionUser,
       on_delete: :delete_all
 
+    has_many :windows, Snap.Windows.Window
+
     timestamps(type: :utc_datetime)
   end
 

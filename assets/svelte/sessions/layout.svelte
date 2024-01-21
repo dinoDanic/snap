@@ -5,13 +5,17 @@
   import { MenuIcon } from "lucide-svelte";
   import Command from "./command.svelte";
   import { onMount } from "svelte";
-  import { Session } from "$lib/types";
+  import { Session, Window } from "$lib/types";
 
-  export let sessions: Session[] = [];
+  export let windows: Window[] = [];
   export let active_session: Session;
+  //
+  export let active_window_id: string;
   export let live: Live;
 
   let open = false;
+
+  console.log(active_window_id);
 
   onMount(() => {
     function handleKeydown(e: KeyboardEvent) {
@@ -19,9 +23,9 @@
       const { key } = e;
       if (isStringANumber(key)) {
         const keyIndex = Number(key) - 1;
-        const findSession = sessions.at(keyIndex);
-        if (findSession) {
-          live.pushEvent("change_session", { session_id: findSession.id });
+        const findWindow = windows.at(keyIndex);
+        if (findWindow) {
+          live.pushEvent("change_window", { window_id: findWindow.id });
         }
         //
       } else {
@@ -37,11 +41,14 @@
 </script>
 
 <div class="flex bg-accent">
+  <div class="px-md bg-lime-700 text-sm">
+    {active_session.name}
+  </div>
   <div class="flex gap-md flex-1 overflow-scroll">
-    {#each sessions as session, index}
+    {#each windows as windowItem, index}
       <Item
-        {session}
-        isActive={active_session.id === session.id}
+        {windowItem}
+        isActive={active_window_id == windowItem.id}
         index={index + 1}
       />
     {/each}

@@ -13,7 +13,8 @@ defmodule Snap.Windows.Window do
   @doc false
   def changeset(window, attrs) do
     window
-    |> cast(attrs, [:name, :session_id])
-    |> validate_required([:name, :session_id])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+    |> unique_constraint(:name)
   end
 end

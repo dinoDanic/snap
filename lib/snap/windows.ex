@@ -49,9 +49,10 @@ defmodule Snap.Windows do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_window(attrs \\ %{}) do
+  def create_window(attrs \\ %{}, session) do
     %Window{}
     |> Window.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:session, session)
     |> Repo.insert()
   end
 

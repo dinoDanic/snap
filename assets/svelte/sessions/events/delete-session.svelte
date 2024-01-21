@@ -10,7 +10,7 @@
   <AlertDialog.Trigger class="w-full">
     <Command.Item>
       <TrashIcon class="mr-2 h-4 w-4" />
-      <span>Delete Session</span>
+      <span>Delete</span>
     </Command.Item>
   </AlertDialog.Trigger>
   <AlertDialog.Content>

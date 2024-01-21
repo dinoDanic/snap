@@ -1,18 +1,10 @@
 <script lang="ts">
-  import {
-    Calculator,
-    Calendar,
-    CreditCard,
-    GridIcon,
-    Settings,
-    Smile,
-    TrashIcon,
-    User,
-  } from "lucide-svelte";
+  import { GridIcon } from "lucide-svelte";
   import * as Command from "$lib/components/ui/command";
   import { onMount } from "svelte";
   import { Live } from "live_svelte";
   import DeleteSession from "./events/delete-session.svelte";
+  import InviteSession from "./events/invite-session.svelte";
 
   export let open = false;
   export let live: Live;
@@ -50,6 +42,11 @@
       live.pushEvent("delete_session");
     });
   }
+  function inviteSession(email: string) {
+    runCommand(() => {
+      live.pushEvent("invite_session", { email: email });
+    });
+  }
 </script>
 
 <Command.Dialog bind:open on:select={() => console.log("kita")}>
@@ -59,30 +56,16 @@
   />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
+    <Command.Group heading="Current Session">
+      <DeleteSession {deleteSession} />
+      <InviteSession {inviteSession} />
+    </Command.Group>
+    <!-- <Command.Separator /> -->
     <Command.Group heading="Session">
       <Command.Item onSelect={createSession}>
         <GridIcon class="mr-2 h-4 w-4" />
-        <span>New Session</span>
+        <span>New</span>
       </Command.Item>
-      <DeleteSession {deleteSession} />
     </Command.Group>
-    <!-- <Command.Separator /> -->
-    <!-- <Command.Group heading="Settings"> -->
-    <!--   <Command.Item> -->
-    <!--     <User class="mr-2 h-4 w-4" /> -->
-    <!--     <span>Profile</span> -->
-    <!--     <Command.Shortcut>⌘P</Command.Shortcut> -->
-    <!--   </Command.Item> -->
-    <!--   <Command.Item> -->
-    <!--     <CreditCard class="mr-2 h-4 w-4" /> -->
-    <!--     <span>Billing</span> -->
-    <!--     <Command.Shortcut>⌘B</Command.Shortcut> -->
-    <!--   </Command.Item> -->
-    <!--   <Command.Item> -->
-    <!--     <Settings class="mr-2 h-4 w-4" /> -->
-    <!--     <span>Settings</span> -->
-    <!--     <Command.Shortcut>⌘S</Command.Shortcut> -->
-    <!--   </Command.Item> -->
-    <!-- </Command.Group> -->
   </Command.List>
 </Command.Dialog>

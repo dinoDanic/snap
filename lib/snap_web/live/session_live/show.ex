@@ -64,4 +64,10 @@ defmodule SnapWeb.SessionLive.Show do
         {:noreply, push_patch(socket, to: "/session/#{session.id}")}
     end
   end
+
+  def handle_event("invite_session", %{"email" => email}, socket) do
+    session_id = socket.assigns.active_session.id
+    Sessions.invite_user_to_session(email, session_id)
+    {:noreply, socket}
+  end
 end

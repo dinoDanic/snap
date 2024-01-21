@@ -15,9 +15,9 @@ defmodule Snap.SessionsTest do
       assert Sessions.list_sessions() == [session]
     end
 
-    test "get_session!/1 returns the session with given id" do
+    test "get_session/1 returns the session with given id" do
       session = session_fixture()
-      assert Sessions.get_session!(session.id) == session
+      assert Sessions.get_session(session.id) == session
     end
 
     test "create_session/1 with valid data creates a session" do
@@ -42,13 +42,13 @@ defmodule Snap.SessionsTest do
     test "update_session/2 with invalid data returns error changeset" do
       session = session_fixture()
       assert {:error, %Ecto.Changeset{}} = Sessions.update_session(session, @invalid_attrs)
-      assert session == Sessions.get_session!(session.id)
+      assert session == Sessions.get_session(session.id)
     end
 
     test "delete_session/1 deletes the session" do
       session = session_fixture()
       assert {:ok, %Session{}} = Sessions.delete_session(session)
-      assert_raise Ecto.NoResultsError, fn -> Sessions.get_session!(session.id) end
+      assert_raise Ecto.NoResultsError, fn -> Sessions.get_session(session.id) end
     end
 
     test "change_session/1 returns a session changeset" do

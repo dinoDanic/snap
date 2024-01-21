@@ -3,18 +3,13 @@ defmodule SnapWeb.SessionLive.Show do
   use SnapWeb, :session_live_view
   use LiveSvelte.Components
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="flex h-full w-full items-center justify-center">
       Session <%= @active_session.name %>
     </div>
     """
-  end
-
-  def mount(params, session, socket) do
-    user = socket.assigns.current_user
-
-    {:ok, socket}
   end
 
   @impl true
@@ -34,9 +29,6 @@ defmodule SnapWeb.SessionLive.Show do
 
         session_to_svelte = %{id: session.id, name: session.name}
 
-        IO.inspect(session)
-        IO.inspect(session_to_svelte)
-
         {:noreply,
          socket
          |> assign(:active_session, session_to_svelte)
@@ -45,12 +37,13 @@ defmodule SnapWeb.SessionLive.Show do
     end
   end
 
+  @impl true
   def handle_event("change_session", %{"session_id" => session_id}, socket) do
     {:noreply, push_patch(socket, to: "/session/#{session_id}")}
   end
 
+  @impl true
   def handle_event("delete_session", _unsigned_params, socket) do
-    user = socket.assigns.current_user
     active_session = socket.assigns.active_session
 
     case(Sessions.delete_session(active_session.id)) do

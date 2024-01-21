@@ -40,7 +40,7 @@ defmodule SnapWeb.SessionLiveBK.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    session = Sessions.get_session!(id)
+    session = Sessions.get_session(id)
     {:ok, _} = Sessions.delete_session(session)
 
     {:noreply, stream_delete(socket, :sessions, session)}

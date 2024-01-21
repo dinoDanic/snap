@@ -23,8 +23,8 @@ defmodule SnapWeb.HomeLive.Index do
     user = Repo.get(User, assigned_user.id)
 
     case Repo.preload(user, :sessions) do
-      %User{sessions: sessions} when length(sessions) > 0 -> {true, sessions}
-      _ -> {false}
+      %User{sessions: []} -> {false}
+      %User{sessions: sessions} -> {true, sessions}
     end
   end
 

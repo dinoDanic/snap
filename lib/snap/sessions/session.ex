@@ -21,7 +21,7 @@ defmodule Snap.Sessions.Session do
     |> validate_required([:name])
   end
 
-  def create_changeset(session, attrs \\ %{}, user \\ %{}) do
+  def create_changeset(session, attrs \\ %{}) do
     session
     |> cast(attrs, [:name])
     |> validate_required([:name])

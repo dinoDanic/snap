@@ -1,9 +1,5 @@
 defmodule SnapWeb.SessionLive.New do
-  alias Snap.Users
   alias Snap.Sessions
-  alias Snap.Sessions.Session
-  alias Snap.Repo
-  alias Phoenix.LiveView
 
   use SnapWeb, :live_view
   use LiveSvelte.Components
@@ -40,16 +36,10 @@ defmodule SnapWeb.SessionLive.New do
       {:ok, session} ->
         {:noreply, push_navigate(socket, to: "/session/#{session.id}")}
 
-      {:error, changeset} ->
-        # errors = [%{key: "name", error: "error-message"}]
-        form_errors =
-          Enum.map(changeset.errors, fn {field, messages} ->
-            %{key: field, error: Enum.join(messages, ", ")}
-          end)
-
-        socket =
-          socket
-          |> assign(:form_errors, [%{name: "3"}])
+      {:error, _changeset} ->
+        # socket =
+        #   socket
+        #   |> assign(:form_errors, [%{name: "3"}])
 
         {:noreply, socket}
 
@@ -63,9 +53,3 @@ defmodule SnapWeb.SessionLive.New do
     {:noreply, assign(socket, :number, socket.assigns.number + 1)}
   end
 end
-
-# for={@form} phx-submit="create">
-#   <.input field={@form[:name]} type="text" label="name" />
-#   <.button>create</.button>
-# </.form
-# <.svelte name="sessions/new_session" props={%{number: @number, form_errors: @form_errors}} />

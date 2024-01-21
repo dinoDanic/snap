@@ -13,7 +13,7 @@ defmodule SnapWeb.SessionLiveBK.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:session, Sessions.get_session!(id))}
+     |> assign(:session, Sessions.get_session(id))}
   end
 
   defp page_title(:show), do: "Show Session"

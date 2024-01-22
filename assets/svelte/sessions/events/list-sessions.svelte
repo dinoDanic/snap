@@ -11,5 +11,5 @@
 
 <Command.Item onSelect={submit}>
   <ListIcon class="mr-2 h-4 w-4" />
-  <span>List</span>
+  <span>My Sessions</span>
 </Command.Item>

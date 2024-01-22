@@ -7,6 +7,8 @@
   import InviteSession from "./events/invite-session.svelte";
   import ListSessions from "./events/list-sessions.svelte";
   import CreateWindow from "./events/create-window.svelte";
+  import DeleteWindow from "./events/delete-window.svelte";
+  import CreatePane from "./events/create-pane.svelte";
 
   export let open = false;
   export let live: Live;
@@ -24,10 +26,6 @@
       document.removeEventListener("keydown", handleKeydown);
     };
   });
-
-  const onSelect = () => {
-    console.log("on select");
-  };
 
   function runCommand(cmd: () => void) {
     cmd();
@@ -63,14 +61,30 @@
       live.pushEvent("create_window", { window_name });
     });
   }
+
+  function deleteWindow() {
+    runCommand(() => {
+      live.pushEvent("delete_window");
+    });
+  }
+
+  function createPane() {
+    runCommand(() => {
+      live.pushEvent("create_pane");
+    });
+  }
 </script>
 
 <Command.Dialog bind:open>
   <Command.Input placeholder="Type a command or search..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
+    <Command.Group heading="Pane">
+      <CreatePane {createPane} />
+    </Command.Group>
     <Command.Group heading="Windows">
       <CreateWindow {createWindow} />
+      <DeleteWindow {deleteWindow} />
     </Command.Group>
     <Command.Separator />
     <Command.Group heading="Current Session">
@@ -81,7 +95,7 @@
     <Command.Group heading="Session">
       <Command.Item onSelect={createSession}>
         <GridIcon class="mr-2 h-4 w-4" />
-        <span>New</span>
+        <span>New Session</span>
       </Command.Item>
       <ListSessions {listSessions} />
     </Command.Group>

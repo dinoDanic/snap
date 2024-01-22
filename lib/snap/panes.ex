@@ -49,9 +49,10 @@ defmodule Snap.Panes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_pane(attrs \\ %{}) do
+  def create_pane(attrs \\ %{}, window) do
     %Pane{}
     |> Pane.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:window, window)
     |> Repo.insert()
   end
 

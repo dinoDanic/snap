@@ -18,7 +18,7 @@
   <AlertDialog.Trigger class="w-full">
     <Command.Item>
       <UserPlusIcon class="mr-2 h-4 w-4" />
-      <span>Invite</span>
+      <span>Invite To Session</span>
     </Command.Item>
   </AlertDialog.Trigger>
   <AlertDialog.Content>

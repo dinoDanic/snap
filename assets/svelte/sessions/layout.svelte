@@ -2,20 +2,18 @@
   import { Live } from "live_svelte";
   import { isStringANumber } from "../helpers/numbers";
   import Item from "./item.svelte";
-  import { MenuIcon } from "lucide-svelte";
+  import Badge from "../components/ui/badge/badge.svelte";
+  import { ArrowRightIcon, CommandIcon } from "lucide-svelte";
   import Command from "./command.svelte";
   import { onMount } from "svelte";
   import { Session, Window } from "$lib/types";
 
   export let windows: Window[] = [];
   export let active_session: Session;
-  //
   export let active_window_id: string;
   export let live: Live;
 
   let open = false;
-
-  console.log(active_window_id);
 
   onMount(() => {
     function handleKeydown(e: KeyboardEvent) {
@@ -40,28 +38,25 @@
   });
 </script>
 
-<div class="flex bg-accent">
-  <div class="px-md bg-lime-700 text-sm">
+<div class="flex h-[40px] p-sm gap-sm">
+  <Badge class="px-md" variant="secondary">
     {active_session.name}
-  </div>
-  <div class="flex gap-md flex-1 overflow-scroll">
+  </Badge>
+  <ArrowRightIcon class="w-4 text-muted-foreground" />
+  <div class="flex gap-0 flex-1 overflow-scroll">
     {#each windows as windowItem, index}
       <Item
         {windowItem}
-        isActive={active_window_id == windowItem.id}
+        isActive={Number(active_window_id) === windowItem.id}
         index={index + 1}
       />
     {/each}
   </div>
   <button on:click={() => (open = true)} class="flex items-center">
-    <MenuIcon class="w-4" />
-    <p class="text-sm">
-      <kbd
-        class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100"
-      >
-        <span class="text-xs">⌘</span>K
-      </kbd>
-    </p>
+    <Badge>
+      <CommandIcon class="w-2.5 h-2.5 mr-xs" />
+      K
+    </Badge>
   </button>
 </div>
 

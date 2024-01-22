@@ -3,14 +3,11 @@
   import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import { LayoutPanelTopIcon, UserPlusIcon } from "lucide-svelte";
   import Button from "$lib/components/ui/button/button.svelte";
-  import { Input } from "$lib/components/ui/input";
 
-  export let createWindow: (window_name: string) => void;
-  let value: string;
+  export let deleteWindow: () => void;
 
   const submit = () => {
-    if (value === "" || !value) return;
-    createWindow(value);
+    deleteWindow();
   };
 </script>
 
@@ -18,19 +15,20 @@
   <AlertDialog.Trigger class="w-full">
     <Command.Item>
       <LayoutPanelTopIcon class="mr-2 h-4 w-4" />
-      <span>Create Window</span>
+      <span>Delete Window</span>
     </Command.Item>
   </AlertDialog.Trigger>
   <AlertDialog.Content>
     <form on:submit|preventDefault={submit} class="space-y-lg">
       <AlertDialog.Header>
-        <AlertDialog.Title>Create window</AlertDialog.Title>
-        <AlertDialog.Description>Provide window name</AlertDialog.Description>
-        <Input bind:value />
+        <AlertDialog.Title>Delete window</AlertDialog.Title>
+        <AlertDialog.Description
+          >Are you sure, this can not be undone</AlertDialog.Description
+        >
       </AlertDialog.Header>
       <AlertDialog.Footer>
         <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-        <Button type="submit">Create</Button>
+        <Button type="submit">Delete</Button>
       </AlertDialog.Footer>
     </form>
   </AlertDialog.Content>

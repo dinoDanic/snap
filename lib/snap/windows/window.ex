@@ -6,6 +6,7 @@ defmodule Snap.Windows.Window do
     field :name, :string
 
     belongs_to :session, Snap.Sessions.Session
+    has_many :panes, Snap.Panes.Pane
 
     timestamps(type: :utc_datetime)
   end

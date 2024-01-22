@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { cn } from "$lib/utils";
+  import { Badge } from "$lib/components/ui/badge";
+  import { DotIcon } from "lucide-svelte";
   import type { Window } from "../types";
 
   export let isActive: boolean = false;
@@ -7,14 +8,11 @@
   export let index: number = 0;
 </script>
 
-<div class="flex items-center justify-center gap-2">
-  <div
-    class={cn(
-      "flex w-8 items-center justify-center bg-accent text-primary-foreground",
-      isActive && "bg-primary",
-    )}
+{#if index !== 1}
+  <DotIcon class="text-muted-foreground" />
+{/if}
+<Badge variant={isActive ? "default" : "secondary"}>
+  <span class="mr-xs">{index}.</span>
+  <span class="truncate whitespace-nowrap max-w-[100px]">{windowItem.name}</span
   >
-    <p class="text-sm">{index}</p>
-  </div>
-  <div class="whitespace-nowrap">{windowItem?.name}</div>
-</div>
+</Badge>

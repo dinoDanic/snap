@@ -12,7 +12,7 @@ defmodule Snap.Panes.Pane do
   @doc false
   def changeset(pane, attrs) do
     pane
-    |> cast(attrs, [:name, :window_id])
-    |> validate_required([:name, :window_id])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
   end
 end

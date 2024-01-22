@@ -1,6 +1,6 @@
 defmodule SnapWeb.SessionLive.Show do
+  alias Snap.Panes
   alias Snap.Windows
-  alias Plug.Session
   alias Snap.Repo
   use SnapWeb, :session_live_view
   use LiveSvelte.Components
@@ -10,9 +10,7 @@ defmodule SnapWeb.SessionLive.Show do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex h-full w-full items-center justify-center">
-      Session <%= @active_session.name %>
-    </div>
+    <.svelte class="h-full" name="pane/pane-list/pane-list" props={%{panes: @panes}} />
     """
   end
 
@@ -26,7 +24,16 @@ defmodule SnapWeb.SessionLive.Show do
         {:noreply, push_patch(socket, to: "/session/#{session_id}/window/#{window_id}")}
 
       [] ->
-        {:noreply, socket}
+        case Windows.create_window(%{name: "welcome_window"}, session) do
+          {:ok, window} ->
+            {:noreply, push_patch(socket, to: "/session/#{session.id}/window/#{window.id}")}
+
+          {:error} ->
+            {:noreply, push_patch(socket, to: "/session/")}
+
+          _ ->
+            {:noreply, push_patch(socket, to: "/")}
+        end
     end
   end
 
@@ -35,9 +42,12 @@ defmodule SnapWeb.SessionLive.Show do
     # if connected?(socket), do: Phoenix.PubSub.subscribe(Snap.PubSub, "sessions")
 
     user = socket.assigns.current_user
-    sessions = Sessions.get_user_sessions(user.id)
 
     session = Sessions.get_session(session_id) |> Repo.preload(:windows)
+
+    active_window =
+      Enum.find(session.windows, fn window -> window.id == String.to_integer(window_id) end)
+      |> Repo.preload(:panes)
 
     case session do
       nil ->
@@ -51,14 +61,38 @@ defmodule SnapWeb.SessionLive.Show do
             %{id: id, name: name}
           end)
 
-        IO.inspect(windows_to_svelte)
         session_to_svelte = %{id: session.id, name: session.name}
 
-        {:noreply,
-         socket
-         |> assign(:windows, windows_to_svelte)
-         |> assign(:active_session, session_to_svelte)
-         |> assign(:active_window_id, window_id)}
+        IO.inspect(active_window.panes)
+
+        case active_window.panes do
+          [] ->
+            case Panes.create_pane(%{name: "Untitled"}, active_window) do
+              {:ok, _pane} ->
+                {:noreply,
+                 push_navigate(socket, to: "/session/#{session_id}/window/#{window_id}")}
+
+              {:error, err} ->
+                IO.inspect(err)
+
+              _ ->
+                IO.puts(~c"shit")
+            end
+
+          _ ->
+            panes_to_svelte =
+              Enum.map(active_window.panes, fn %Snap.Panes.Pane{id: id, name: name} ->
+                %{id: id, name: name}
+              end)
+
+            {:noreply,
+             socket
+             |> assign(:windows, windows_to_svelte)
+             |> assign(:active_session, session_to_svelte)
+             |> assign(:active_window_id, window_id)
+             |> assign(:panes, panes_to_svelte)}
+
+        end
     end
   end
 
@@ -108,6 +142,37 @@ defmodule SnapWeb.SessionLive.Show do
     case Windows.create_window(%{name: window_name}, session) do
       {:ok, window} ->
         {:noreply, push_patch(socket, to: "/session/#{active_session.id}/window/#{window.id}")}
+
+      _ ->
+        IO.puts(~c"handle this")
+        {:noreply, socket}
+    end
+  end
+
+  @impl true
+  def handle_event("delete_window", _unsigned_params, socket) do
+    active_window_id = socket.assigns.active_window_id
+    active_session = socket.assigns.active_session
+    window = Windows.get_window!(active_window_id)
+
+    case(Windows.delete_window(window)) do
+      {:ok, _window} ->
+        {:noreply, redirect(socket, to: "/session/#{active_session.id}")}
+
+      _ ->
+        {:noreply, socket}
+    end
+  end
+
+  @impl true
+  def handle_event("create_pane", _params, socket) do
+    active_window_id = socket.assigns.active_window_id
+
+    window = Snap.Windows.get_window!(active_window_id)
+
+    case Snap.Panes.create_pane(%{name: "Untitled"}, window) do
+      {:ok, _pane} ->
+        {:noreply, :socket}
 
       _ ->
         IO.puts(~c"handle this")

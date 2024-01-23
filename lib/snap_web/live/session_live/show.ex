@@ -41,8 +41,6 @@ defmodule SnapWeb.SessionLive.Show do
   def handle_params(%{"session_id" => session_id, "window_id" => window_id}, _, socket) do
     # if connected?(socket), do: Phoenix.PubSub.subscribe(Snap.PubSub, "sessions")
 
-    user = socket.assigns.current_user
-
     session = Sessions.get_session(session_id) |> Repo.preload(:windows)
 
     active_window =
@@ -50,9 +48,6 @@ defmodule SnapWeb.SessionLive.Show do
       |> Repo.preload(:panes)
 
     case session do
-      nil ->
-        {:noreply, push_patch(socket, to: "/")}
-
       session ->
         %{windows: windows} = session
 
@@ -62,8 +57,6 @@ defmodule SnapWeb.SessionLive.Show do
           end)
 
         session_to_svelte = %{id: session.id, name: session.name}
-
-        IO.inspect(active_window.panes)
 
         case active_window.panes do
           [] ->
@@ -91,7 +84,6 @@ defmodule SnapWeb.SessionLive.Show do
              |> assign(:active_session, session_to_svelte)
              |> assign(:active_window_id, window_id)
              |> assign(:panes, panes_to_svelte)}
-
         end
     end
   end
@@ -134,8 +126,6 @@ defmodule SnapWeb.SessionLive.Show do
 
   @impl true
   def handle_event("create_window", %{"window_name" => window_name}, socket) do
-    IO.puts(~c"create window")
-    IO.inspect(window_name)
     active_session = socket.assigns.active_session
     session = Sessions.get_session(active_session.id)
 
@@ -144,7 +134,6 @@ defmodule SnapWeb.SessionLive.Show do
         {:noreply, push_patch(socket, to: "/session/#{active_session.id}/window/#{window.id}")}
 
       _ ->
-        IO.puts(~c"handle this")
         {:noreply, socket}
     end
   end
@@ -171,11 +160,14 @@ defmodule SnapWeb.SessionLive.Show do
     window = Snap.Windows.get_window!(active_window_id)
 
     case Snap.Panes.create_pane(%{name: "Untitled"}, window) do
-      {:ok, _pane} ->
-        {:noreply, :socket}
+      {:ok, pane} ->
+        IO.inspect(pane)
+        pane_to_svelte = %{id: pane.id, name: pane.name}
+        updated_socket = update(socket, :panes, fn panes -> [pane_to_svelte | panes || []] end)
+        {:noreply, updated_socket}
 
       _ ->
-        IO.puts(~c"handle this")
+        IO.puts("TU sam 22222222222222")
         {:noreply, socket}
     end
   end

@@ -58,6 +58,15 @@ defmodule SnapWeb do
     end
   end
 
+  def app_live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {SnapWeb.Layouts, :app_live}
+
+      unquote(html_helpers())
+    end
+  end
+
   def session_live_view do
     quote do
       use Phoenix.LiveView,

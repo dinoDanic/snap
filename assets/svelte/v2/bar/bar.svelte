@@ -12,29 +12,32 @@
   export let session: Session;
   export let live: Live;
 
+  $: console.log(session);
+
   let open = false;
 
-  // onMount(() => {
-  // function handleKeydown(e: KeyboardEvent) {
-  //   if (open) return;
-  //   const { key } = e;
-  //   if (isStringANumber(key)) {
-  //     const keyIndex = Number(key) - 1;
-  //     const findWindow = windows.at(keyIndex);
-  //     if (findWindow) {
-  //       live.pushEvent("change_window", { window_id: findWindow.id });
-  //     }
-  //     //
-  //   } else {
-  //     //
-  //   }
-  // }
+  onMount(() => {
+    function handleKeydown(e: KeyboardEvent) {
+      if (open) return;
+      const { key } = e;
+      if (isStringANumber(key)) {
+        const keyIndex = Number(key) - 1;
+        const findWindow = session.windows.at(keyIndex);
+        if (findWindow) {
+          console.log(findWindow)
+          live.pushEvent("change_window", { window_id: findWindow.id });
+        }
+        //
+      } else {
+        //
+      }
+    }
 
-  // document.addEventListener("keydown", handleKeydown);
-  // return () => {
-  //   document.removeEventListener("keydown", handleKeydown);
-  // };
-  // });
+    document.addEventListener("keydown", handleKeydown);
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  });
 </script>
 
 <div class="flex h-[40px] p-sm gap-sm">

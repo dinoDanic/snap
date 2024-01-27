@@ -3,7 +3,13 @@
   import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import { TrashIcon } from "lucide-svelte";
   import Button from "$lib/components/ui/button/button.svelte";
-  export let deleteSession: () => void;
+
+  export let runCommand: (eventName: string, args?: object) => void;
+
+  const submit = () => {
+    runCommand("delete_session");
+  };
+
 </script>
 
 <AlertDialog.Root>
@@ -23,7 +29,7 @@
     </AlertDialog.Header>
     <AlertDialog.Footer>
       <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-      <Button on:click={deleteSession}>Continue</Button>
+      <Button on:click={submit}>Continue</Button>
     </AlertDialog.Footer>
   </AlertDialog.Content>
 </AlertDialog.Root>

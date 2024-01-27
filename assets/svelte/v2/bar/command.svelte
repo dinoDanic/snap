@@ -3,12 +3,13 @@
   import * as Command from "$lib/components/ui/command";
   import { onMount } from "svelte";
   import { Live } from "live_svelte";
-  // import DeleteSession from "./events/delete-session.svelte";
+  import DeleteSession from "./events/delete-session.svelte";
   // import InviteSession from "./events/invite-session.svelte";
   // import ListSessions from "./events/list-sessions.svelte";
   import CreateWindow from "./events/create-window.svelte";
   // import DeleteWindow from "./events/delete-window.svelte";
   import CreatePane from "./events/create-pane.svelte";
+  import CreateSession from "./events/create-session.svelte";
 
   export let open = false;
   export let live: Live;
@@ -80,19 +81,18 @@
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
     <Command.Group heading="Pane">
-      <CreatePane {runCommand} />
+      <!-- <CreatePane {runCommand} /> -->
     </Command.Group>
-    <Command.Group heading="Windows">
+    <Command.Separator />
+    <Command.Group heading="Window">
       <CreateWindow {runCommand} />
       <!-- <DeleteWindow {live} /> -->
     </Command.Group>
     <Command.Separator />
-    <Command.Group heading="Current Session">
-      <!-- <DeleteSession {live} /> -->
-      <!-- <InviteSession {live} /> -->
-    </Command.Group>
-    <Command.Separator />
     <Command.Group heading="Session">
+      <CreateSession {runCommand} />
+      <DeleteSession {runCommand} />
+      <!-- <InviteSession {live} /> -->
       <!-- <Command.Item onSelect={createSession}> -->
       <!-- <GridIcon class="mr-2 h-4 w-4" /> -->
       <!-- <span>New Session</span> -->

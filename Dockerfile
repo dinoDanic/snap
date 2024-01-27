@@ -94,9 +94,11 @@ ENV MIX_ENV="prod"
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/. ./
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# COPY entrypoint.sh /usr/bin/
+# RUN chmod +x /usr/bin/entrypoint.sh
+# ENTRYPOINT ["entrypoint.sh"]
+
+RUN mix ecto.migrate && mix phx.server
 
 USER nobody
 

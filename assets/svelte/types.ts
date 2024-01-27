@@ -13,4 +13,9 @@ export type Window = {
 export type Pane = {
   id: number;
   name: string;
+  notes: Note[];
+};
+
+export type Note = {
+  note: string;
 };

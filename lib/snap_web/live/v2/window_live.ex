@@ -8,7 +8,7 @@ defmodule SnapWeb.V2.WindowLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.svelte name="v2/window/window" props={%{win: @window}} />
+    <.svelte name="v2/window/window" props={%{win: @window}} class="h-full" />
     """
   end
 

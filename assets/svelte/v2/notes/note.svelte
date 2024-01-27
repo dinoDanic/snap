@@ -1,13 +1,10 @@
 <script lang="ts">
   import { marked } from "marked";
   import { cn } from "$lib/utils";
-  import { Pane } from "$lib/types";
 
   let markdownStore = "";
   let inputRef: HTMLInputElement; // Reference for the input element
   let isEditing = false;
-
-  export let pane: Pane;
 
   function handleFocus() {
     isEditing = true;

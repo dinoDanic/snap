@@ -1,39 +1,9 @@
 <script lang="ts">
-  let content = "title";
+  import { Pane } from "$lib/types";
 
-  let className = "";
-
-  $: {
-    if (content.startsWith("###")) {
-      className = "text-xl";
-    } else if (content.startsWith("##")) {
-      className = "text-2xl";
-    } else if (content.startsWith("#")) {
-      className = "text-3xl";
-    } else {
-      className = "";
-    }
-  }
-
-  const on_input = (
-    e: Event & {
-      currentTarget: EventTarget & HTMLDivElement;
-    },
-  ) => {
-    //@ts-ignore
-    if (e.data === null) {
-      // 
-    }
-  };
+  export let pane: Pane;
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<div
-  contenteditable="true"
-  on:input={(e) => on_input(e)}
-  tabindex={0}
-  bind:innerHTML={content}
-  class={className}
-/>
-j
+<div class="min-w-[33.33%] bg-background hover:bg-secondary/10 flex-1 border border-b-transparent border-l-transparent p-sm flex items-center justify-center">
+  {pane.name}
+</div>

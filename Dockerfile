@@ -1,9 +1,8 @@
 ARG ELIXIR_VERSION=1.14.0
 ARG OTP_VERSION=25.2
 ARG DEBIAN_VERSION=bullseye-20221004-slim
-
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
-ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
+ARG RUNNER_IMAGE="debian:bullseye-20240110"
 
 FROM ${BUILDER_IMAGE} as builder
 
@@ -71,7 +70,8 @@ COPY . .
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
-FROM ${RUNNER_IMAGE}
+# FROM ${RUNNER_IMAGE}
+FROM ${BUILDER_IMAGE}
 
 RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales curl nodejs \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*

@@ -1,8 +1,9 @@
 ARG ELIXIR_VERSION=1.14.0
 ARG OTP_VERSION=25.2
 ARG DEBIAN_VERSION=bullseye-20221004-slim
+
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
-ARG RUNNER_IMAGE="debian:bullseye-20240110"
+ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
@@ -57,8 +58,6 @@ WORKDIR ../
 
 # compile assets
 RUN mix assets.deploy
-#rucno ovo dok ne skuzim kako se to radi
-# COPY assets/js/cookieconsent-config.js priv/static/assets/.
 
 # Compile the release
 RUN mix compile
@@ -94,11 +93,9 @@ ENV MIX_ENV="prod"
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/. ./
 
-# COPY entrypoint.sh /usr/bin/
-# RUN chmod +x /usr/bin/entrypoint.sh
-# ENTRYPOINT ["entrypoint.sh"]
-
-RUN mix ecto.migrate && mix phx.server
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 
 USER nobody
 

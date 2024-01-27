@@ -67,19 +67,18 @@ defmodule SnapWeb.Router do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
 
-      # pocinjemo
-      live "/", V2.HomeLive
-
       # v1
-      live "/v1/session", V1.SessionLive.Index
-      live "/v1/session/list", V1.SessionLive.List
-      live "/v1/session/new", V1.SessionLive.New
-      live "/v1/session/:id", V1.SessionLive.Show
-      live "/v1/session/:session_id/window/:window_id", V1.SessionLive.Show
+      # live "/v1/session", V1.SessionLive.Index
+      # live "/v1/session/list", V1.SessionLive.List
+      # live "/v1/session/new", V1.SessionLive.New
+      # live "/v1/session/:id", V1.SessionLive.Show
+      # live "/v1/session/:session_id/window/:window_id", V1.SessionLive.Show
 
       # v2
-      live "/v2/s/:session_id", V2.SessionLive
-      live "/v2/s/:session_id/w/:window_id", V2.WindowLive
+      live "/", V2.HomeLive.Index
+      live "/v2/s/new", V2.SessionLive.New
+      live "/v2/s/:session_id", V2.SessionLive.Index
+      live "/v2/s/:session_id/w/:window_id", V2.WindowLive.Index
     end
   end
 

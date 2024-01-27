@@ -1,4 +1,4 @@
-defmodule SnapWeb.V2.HomeLive do
+defmodule SnapWeb.V2.HomeLive.Index do
   use SnapWeb, :live_view
   alias Snap.Users.User
   alias Snap.Repo

@@ -1,4 +1,4 @@
-defmodule SnapWeb.V2.SessionLive do
+defmodule SnapWeb.V2.SessionLive.Index do
   alias Snap.Repo
   use SnapWeb, :live_view
 

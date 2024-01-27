@@ -4,13 +4,13 @@
   import Item from "./item.svelte";
   import Badge from "../../components/ui/badge/badge.svelte";
   import { ArrowRightIcon, CommandIcon } from "lucide-svelte";
-  // import Command from "./command.svelte";
+  import Command from "./command.svelte";
   import { onMount } from "svelte";
   import { Session, Window } from "$lib/types";
 
   export let win: Window;
   export let session: Session;
-  // export let live: Live;
+  export let live: Live;
 
   let open = false;
 
@@ -64,5 +64,5 @@
   </button>
 </div>
 
-<!-- <Command {open} {live} /> -->
+<Command {open} {live} />
 <!-- <svelte:window on:keydown|preventDefault={_onkeyDown} /> -->

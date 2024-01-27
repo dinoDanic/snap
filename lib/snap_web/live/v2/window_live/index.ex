@@ -1,4 +1,4 @@
-defmodule SnapWeb.V2.WindowLive do
+defmodule SnapWeb.V2.WindowLive.Index do
   alias Snap.Panes.Pane
   alias Snap.Repo
   alias Snap.Sessions
@@ -49,6 +49,11 @@ defmodule SnapWeb.V2.WindowLive do
       |> assign(:window, window_to_svelte)
       |> assign(:page, String.to_integer(window_id))
 
+    {:noreply, socket}
+  end
+
+  def handle_event("go_to_pane", %{"pane_id" => pane_id}, socket) do
+    IO.puts(pane_id)
     {:noreply, socket}
   end
 

@@ -47,8 +47,6 @@ defmodule SnapWeb.V2.WindowLive.Index do
       |> assign(:window, window_to_svelte)
       |> assign(:page, String.to_integer(window_id))
 
-    IO.inspect(socket.assigns)
-
     {:noreply, socket}
   end
 

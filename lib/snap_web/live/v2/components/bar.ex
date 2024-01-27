@@ -9,9 +9,12 @@ defmodule SnapWeb.V2.Components.Bar do
     ~H"""
     <div class="flex gap-sm pl-md">
       <%= @session.name %>
-      <p>-</p>
-      <%= for pane <- @window.panes do %>
-        <p><%= pane.name %></p>
+      <p>-></p>
+      <%= for window <- @session.windows do %>
+        <%= active = false %>
+        <.link patch={"/v2/s/17/w/#{window.id}"}>
+          <p class="hover:underline"><%= window.name %></p>
+        </.link>
       <% end %>
     </div>
     """

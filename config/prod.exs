@@ -7,6 +7,10 @@ import Config
 # before starting your production server.
 config :snap, SnapWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
+  check_origin: ["//localhost", "//snap.dinosur.app"],
+  url: [host: "https://snap.dinosur.app"],
+  http: [port: 4000, compress: true],
+  secret_key_base: "+iYCCNks9i+Ew+VnGW5lFGGUS8qzToyoNyNptboC3zRnHV7pKRoFN590GttFARC1",
   server: true
 
 # Configures Swoosh API Client

@@ -49,9 +49,10 @@ defmodule Snap.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_note(attrs \\ %{}) do
+  def create_note(attrs \\ %{}, pane) do
     %Note{}
     |> Note.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:pane, pane)
     |> Repo.insert()
   end
 

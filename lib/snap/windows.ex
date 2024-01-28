@@ -2,6 +2,7 @@ defmodule Snap.Windows do
   @moduledoc """
   The Windows context.
   """
+  alias Snap.Panes
 
   import Ecto.Query, warn: false
   alias Snap.Repo
@@ -49,11 +50,26 @@ defmodule Snap.Windows do
       {:error, %Ecto.Changeset{}}
 
   """
+
+  # def create_window(attrs \\ %{}, session) do
+  #   %Window{}
+  #   |> Window.changeset(attrs)
+  #   |> Ecto.Changeset.put_assoc(:session, session)
+  #   |> Repo.insert()
+  # end
+
   def create_window(attrs \\ %{}, session) do
-    %Window{}
-    |> Window.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:session, session)
-    |> Repo.insert()
+    window_changeset =
+      %Window{}
+      |> Window.changeset(attrs)
+      |> Ecto.Changeset.put_assoc(:session, session)
+
+    Repo.transaction(fn ->
+      {:ok, window} = Repo.insert(window_changeset)
+      welcome_pane_attrs = %{"name" => "Welcome Pane"}
+      Panes.create_pane(welcome_pane_attrs, window)
+      window
+    end)
   end
 
   @doc """

@@ -57,9 +57,14 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
         {:noreply, redirect(update_socket, to: "/")}
 
       window ->
-        IO.puts(~c"tu smammmmmmmmmmmmmmmmm2 ")
         IO.inspect(window)
         {:noreply, push_patch(update_socket, to: "/v2/s/#{session.id}/w/#{window.id}")}
     end
+  end
+
+  def go_to_pane(pane_id, socket) do
+    session = socket.assigns.session
+    window = socket.assigns.window
+    {:noreply, push_patch(socket, to: "/v2/s/#{session.id}/w/#{window.id}/p/#{pane_id}")}
   end
 end

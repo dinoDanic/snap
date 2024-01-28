@@ -4,6 +4,7 @@ defmodule Snap.Panes do
   """
 
   import Ecto.Query, warn: false
+  alias Snap.Notes
   alias Snap.Repo
 
   alias Snap.Panes.Pane
@@ -49,11 +50,25 @@ defmodule Snap.Panes do
       {:error, %Ecto.Changeset{}}
 
   """
+
+  # def create_pane(attrs \\ %{}, window) do
+  #   %Pane{}
+  #   |> Pane.changeset(attrs)
+  #   |> Ecto.Changeset.put_assoc(:window, window)
+  #   |> Repo.insert()
+  # end
+
   def create_pane(attrs \\ %{}, window) do
-    %Pane{}
-    |> Pane.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:window, window)
-    |> Repo.insert()
+    pane_changeset =
+      %Pane{}
+      |> Pane.changeset(attrs)
+      |> Ecto.Changeset.put_assoc(:window, window)
+
+    Repo.transaction(fn ->
+      {:ok, pane} = Repo.insert(pane_changeset)
+      note_attrs = %{"note" => "# This is h1"}
+      Notes.create_note(note_attrs, pane)
+    end)
   end
 
   @doc """

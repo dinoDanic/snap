@@ -79,6 +79,7 @@ defmodule SnapWeb.Router do
       live "/v2/s/new", V2.SessionLive.New
       live "/v2/s/:session_id", V2.SessionLive.Index
       live "/v2/s/:session_id/w/:window_id", V2.WindowLive.Index
+      live "/v2/s/:session_id/w/:window_id/p/:pane_id", V2.WindowLive.Index
     end
   end
 

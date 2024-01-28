@@ -1,4 +1,5 @@
 defmodule SnapWeb.V2.WindowLive.Index do
+  alias SnapWeb.V2.WindowLive
   alias SnapWeb.V2.WindowLive.HandleParams
   alias SnapWeb.V2.WindowLive.HandleEvents
   use SnapWeb, :app_live_view
@@ -6,19 +7,32 @@ defmodule SnapWeb.V2.WindowLive.Index do
 
   @impl true
   def render(assigns) do
+    IO.inspect(assigns)
+
     ~H"""
-    <.svelte name="v2/window/window" props={%{win: @window}} class="h-full" />
+    <%= if @page == :window do %>
+      <.svelte name="v2/window/window" props={%{win: @window}} class="h-full" />
+    <% end %>
+    <%= if @page == :pane do %>
+      <.svelte name="v2/pane/pane" props={%{pane: @pane}} />
+    <% end %>
     """
   end
 
   @impl true
-  def handle_params(%{"session_id" => session_id, "window_id" => window_id}, _uri, socket) do
-    HandleParams.index(session_id, window_id, socket)
+  def handle_params(%{"session_id" => s_id, "window_id" => w_id, "pane_id" => p_id}, _uri, socket) do
+    HandleParams.pane_id(s_id, w_id, p_id, socket)
+  end
+
+  @impl true
+  def handle_params(%{"session_id" => s_id, "window_id" => w_id}, _uri, socket) do
+    index_socket = HandleParams.index(s_id, w_id, socket)
+    {:noreply, index_socket}
   end
 
   @impl true
   def handle_event("go_to_pane", %{"pane_id" => pane_id}, socket) do
-    {:noreply, socket}
+    HandleEvents.go_to_pane(pane_id, socket)
   end
 
   @impl true

@@ -7,7 +7,7 @@
   // import InviteSession from "./events/invite-session.svelte";
   // import ListSessions from "./events/list-sessions.svelte";
   import CreateWindow from "./events/create-window.svelte";
-  // import DeleteWindow from "./events/delete-window.svelte";
+  import DeleteWindow from "./events/delete-window.svelte";
   import CreatePane from "./events/create-pane.svelte";
   import CreateSession from "./events/create-session.svelte";
 
@@ -86,7 +86,7 @@
     <Command.Separator />
     <Command.Group heading="Window">
       <CreateWindow {runCommand} />
-      <!-- <DeleteWindow {live} /> -->
+      <DeleteWindow {runCommand} />
     </Command.Group>
     <Command.Separator />
     <Command.Group heading="Session">

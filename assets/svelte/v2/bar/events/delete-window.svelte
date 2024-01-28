@@ -4,10 +4,10 @@
   import { LayoutPanelTopIcon } from "lucide-svelte";
   import Button from "$lib/components/ui/button/button.svelte";
 
-  export let deleteWindow: () => void;
+  export let runCommand: (eventName: string, args?: object) => void;
 
   const submit = () => {
-    deleteWindow();
+    runCommand("delete_window");
   };
 </script>
 

@@ -10,7 +10,7 @@ config :snap, SnapWeb.Endpoint,
   check_origin: ["//localhost", "//snap.dinosur.app"],
   url: [host: "https://snap.dinosur.app"],
   http: [port: 4000, compress: true],
-  secret_key_base: "+iYCCNks9i+Ew+VnGW5lFGGUS8qzToyoNyNptboC3zRnHV7pKRoFN590GttFARC1",
+  secret_key_base: "mYsDMNjmYuRwEABp0REreeh+F9Y0BWOsPzzYNHV3POye+a6BwSl/4UF9jaMcih3X",
   server: true
 
 # Configures Swoosh API Client

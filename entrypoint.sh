@@ -1,3 +1,5 @@
 #!/bin/bash
 
-mix ecto.migrate && mix phx.server
+/app/snap/bin/snap eval "ReleaseTasks.migrate"
+/app/snap/bin/snap start
+

@@ -1,4 +1,5 @@
 defmodule SnapWeb.V2.WindowLive.HandleEvents do
+  alias Snap.Notes
   alias Snap.Windows
   alias Snap.Sessions
   use SnapWeb, :app_live_view
@@ -66,5 +67,30 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
     session = socket.assigns.session
     window = socket.assigns.window
     {:noreply, push_patch(socket, to: "/v2/s/#{session.id}/w/#{window.id}/p/#{pane_id}")}
+  end
+
+  def update_note(%{"id" => note_id, "note" => new_note}, socket) do
+    IO.inspect(socket.assigns)
+    active_pane = socket.assigns.pane
+
+    update_notes =
+      Enum.map(active_pane.notes, fn note ->
+        if note.id == note_id do
+          %{note | note: new_note}
+        else
+          note
+        end
+      end)
+
+    update_pane = %{active_pane | notes: update_notes}
+
+    update_socket = assign(socket, :pane, update_pane)
+
+    Task.start(fn ->
+      get_note = Notes.get_note!(note_id)
+      Notes.update_note(get_note, %{note: new_note})
+    end)
+
+    {:noreply, update_socket}
   end
 end

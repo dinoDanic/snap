@@ -31,7 +31,6 @@ defmodule SnapWeb.V2.WindowLive.HandleParams do
       socket
       |> assign(:session, session_to_svelte)
       |> assign(:window, window_to_svelte)
-      |> assign(:page, :window)
 
     socket
   end
@@ -41,20 +40,34 @@ defmodule SnapWeb.V2.WindowLive.HandleParams do
     |> Repo.preload(windows: :panes)
   end
 
-  defp panes_to_svelte(panes) do
-    update_panes = Enum.map(panes, fn pane -> %{name: pane.name, id: pane.id} end)
+  def window_page(session_id, window_id, socket) do
+    base_socket = index(session_id, window_id, socket)
+
+    socket =
+      base_socket
+      |> assign(:page, :window)
+
+    {:noreply, socket}
   end
 
-  def pane_id(session_id, window_id, pane_id, socket) do
+  def pane_page(session_id, window_id, pane_id, socket) do
     base_socket = index(session_id, window_id, socket)
+
     pane = Panes.get_pane!(pane_id) |> Repo.preload(:notes)
 
     notes_to_svelte = Enum.map(pane.notes, fn note -> %{note: note.note, id: note.id} end)
 
     pane_to_svelte = %{id: pane.id, name: pane.name, notes: notes_to_svelte}
 
-    socket = base_socket |> assign(:pane, pane_to_svelte) |> assign(:page, :pane)
+    socket =
+      base_socket
+      |> assign(:pane, pane_to_svelte)
+      |> assign(:page, :pane)
 
     {:noreply, socket}
+  end
+
+  defp panes_to_svelte(panes) do
+    Enum.map(panes, fn pane -> %{name: pane.name, id: pane.id} end)
   end
 end

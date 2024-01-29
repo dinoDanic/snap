@@ -1,4 +1,5 @@
 defmodule SnapWeb.V2.WindowLive.Index do
+  alias Snap.Notes.Note
   alias SnapWeb.V2.WindowLive
   alias SnapWeb.V2.WindowLive.HandleParams
   alias SnapWeb.V2.WindowLive.HandleEvents
@@ -7,8 +8,6 @@ defmodule SnapWeb.V2.WindowLive.Index do
 
   @impl true
   def render(assigns) do
-    IO.inspect(assigns)
-
     ~H"""
     <%= if @page == :window do %>
       <.svelte name="v2/window/window" props={%{win: @window}} class="h-full" />
@@ -21,13 +20,12 @@ defmodule SnapWeb.V2.WindowLive.Index do
 
   @impl true
   def handle_params(%{"session_id" => s_id, "window_id" => w_id, "pane_id" => p_id}, _uri, socket) do
-    HandleParams.pane_id(s_id, w_id, p_id, socket)
+    HandleParams.pane_page(s_id, w_id, p_id, socket)
   end
 
   @impl true
   def handle_params(%{"session_id" => s_id, "window_id" => w_id}, _uri, socket) do
-    index_socket = HandleParams.index(s_id, w_id, socket)
-    {:noreply, index_socket}
+    HandleParams.window_page(s_id, w_id, socket)
   end
 
   @impl true
@@ -59,5 +57,10 @@ defmodule SnapWeb.V2.WindowLive.Index do
   @impl true
   def handle_event("delete_window", _unsigned_params, socket) do
     HandleEvents.delete_window(socket)
+  end
+
+  @impl true
+  def handle_event("update_note", note, socket) do
+    HandleEvents.update_note(note, socket)
   end
 end

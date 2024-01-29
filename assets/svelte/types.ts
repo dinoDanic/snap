@@ -17,7 +17,7 @@ export type Pane = {
 };
 
 export type Note = {
-  note: string;
+  note: string | null;
 };
 
 

@@ -1,18 +1,14 @@
 <script lang="ts">
   import { Pane } from "$lib/types";
+    import { Live } from "live_svelte";
   import Note from "../notes/note.svelte";
 
   export let pane: Pane;
+  export let live: Live
 </script>
 
-<p>{pane.name}</p>
-
-{#each pane.notes as note}
-  <Note />
-  <Note />
-  <Note />
-  <Note />
-  <Note />
-  <Note />
-  <Note />
-{/each}
+<div class="p-md">
+  {#each pane.notes as note}
+    <Note {note} {live} />
+  {/each}
+</div>

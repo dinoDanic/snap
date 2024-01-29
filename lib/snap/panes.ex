@@ -68,6 +68,11 @@ defmodule Snap.Panes do
       {:ok, pane} = Repo.insert(pane_changeset)
       note_attrs = %{"note" => "# This is h1"}
       Notes.create_note(note_attrs, pane)
+
+      1..4
+      |> Enum.each(fn _ ->
+        Notes.create_note(%{}, pane)
+      end)
     end)
   end
 

@@ -13,6 +13,6 @@ defmodule Snap.Notes.Note do
   def changeset(note, attrs) do
     note
     |> cast(attrs, [:note])
-    |> validate_required([:note])
+    |> validate_required([])
   end
 end

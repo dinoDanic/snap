@@ -24,3 +24,22 @@ config :logger, level: :info
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
+
+config :snap, Snap.Repo,
+  # username: "postgres",
+  # password: "postgres",
+  # hostname: "localhost",
+  # database: "snap_dev",
+  # stacktrace: true,
+  # show_sensitive_data_on_connection_error: true,
+  # pool_size: 10
+
+  # dinosur
+  username: "postgres",
+  password: "Ruda,actv1",
+  hostname: "167.235.150.40",
+  database: "snap_dev",
+  port: 5432,
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10

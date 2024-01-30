@@ -68,9 +68,9 @@
     }}
     class="flex items-center"
   >
-    <Badge>
+    <Badge variant='secondary'>
       <CommandIcon class="w-2.5 h-2.5 mr-xs" />
-      K
+      M
     </Badge>
   </button>
 </div>

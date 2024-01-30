@@ -5,6 +5,7 @@
 
   export let win: Window;
   export let live: Live;
+
   $: havePanes = win.panes.length > 0;
 </script>
 

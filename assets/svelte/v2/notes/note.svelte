@@ -5,23 +5,35 @@
   import { Live } from "live_svelte";
 
   let inputRef: HTMLInputElement;
-  let divRef: HTMLDivElement;
   let isEditing = false;
 
   export let live: Live;
-
   export let note: Note;
+  export let focus_index: number;
+  export let index: number;
 
   let value = note.note || "";
 
   function handleFocus() {
     isEditing = true;
-    // Timeout to ensure the input is rendered before focusing
+    // pogle zaka ovo ne radi
+    focus_index = index;
     setTimeout(() => {
-      // if (divRef) divRef.focus();
       if (inputRef) inputRef.focus();
     }, 0);
   }
+
+  function handleVimFocus(focus_index: number) {
+    const isActive = index === focus_index;
+    if (isActive) {
+      isEditing = true;
+      setTimeout(() => {
+        if (inputRef) inputRef.focus();
+      }, 0);
+    }
+  }
+
+  $: handleVimFocus(focus_index);
 
   $: htmlContent = marked(value);
   $: isH1 = value.startsWith("# ");
@@ -29,13 +41,9 @@
   $: isH3 = value.startsWith("### ");
   $: isH4 = value.startsWith("#### ");
 
-  const _onkeyDown = (e: KeyboardEvent) => {
-    const { key } = e;
-  };
-
   const onBlur = () => {
     isEditing = false;
-    console.log('value', value, note.note)
+    console.log("value", value, note.note);
     if (value !== note.note || "") {
       live.pushEvent("update_note", { ...note, note: value });
     }
@@ -58,22 +66,6 @@
     )}
     on:blur={onBlur}
   />
-  <!-- <div -->
-  <!--   bind:this={divRef} -->
-  <!--   bind:textContent={value} -->
-  <!--   contenteditable="true" -->
-  <!--   on:blur={() => (isEditing = false)} -->
-  <!--   class={cn( -->
-  <!--     "bg-primary/20 w-full focus:border-none focus:outline-none  overflow-y-hidden resize-none", -->
-  <!--     // shareClass, -->
-  <!--     isH1 && "text-4xl", -->
-  <!--     isH2 && "text-3xl", -->
-  <!--     isH3 && "text-2xl", -->
-  <!--     isH4 && "text-xl", -->
-  <!--   )} -->
-  <!-- > -->
-  <!--   {value} -->
-  <!-- </div> -->
 {:else}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -88,5 +80,3 @@
     {@html htmlContent}
   </div>
 {/if}
-
-<!-- <svelte:window on:keydown|preventDefault={_onkeyDown} /> -->

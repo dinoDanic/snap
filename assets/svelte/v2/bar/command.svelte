@@ -16,7 +16,7 @@
 
   onMount(() => {
     function handleKeydown(e: KeyboardEvent) {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "m" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         open = !open;
       }

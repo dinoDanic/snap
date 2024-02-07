@@ -1,6 +1,4 @@
 defmodule SnapWeb.V2.WindowLive.Index do
-  alias Snap.Notes.Note
-  alias SnapWeb.V2.WindowLive
   alias SnapWeb.V2.WindowLive.HandleParams
   alias SnapWeb.V2.WindowLive.HandleEvents
   use SnapWeb, :app_live_view

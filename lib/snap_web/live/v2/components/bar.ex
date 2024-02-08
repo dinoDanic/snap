@@ -11,7 +11,6 @@ defmodule SnapWeb.V2.Components.Bar do
       <%= @session.name %>
       <p>-></p>
       <%= for window <- @session.windows do %>
-        <%= active = false %>
         <.link patch={"/v2/s/17/w/#{window.id}"}>
           <p class="hover:underline"><%= window.name %></p>
         </.link>

@@ -45,6 +45,7 @@ defmodule SnapWeb.V1.SessionLive.List do
     {:ok, socket}
   end
 
+  @impl true
   def handle_event("redirect", %{"session_id" => session_id}, socket) do
     {:noreply, push_navigate(socket, to: "/v1/session/#{session_id}")}
   end

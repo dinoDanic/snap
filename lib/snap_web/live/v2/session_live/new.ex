@@ -2,6 +2,7 @@ defmodule SnapWeb.V2.SessionLive.New do
   alias Snap.Windows
   alias Snap.Sessions
   use SnapWeb, :live_view
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -23,13 +24,6 @@ defmodule SnapWeb.V2.SessionLive.New do
       )
 
     {:ok, socket}
-  end
-
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <.svelte name="v1/sessions/new_session" />
-    """
   end
 
   @impl true

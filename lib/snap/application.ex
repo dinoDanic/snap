@@ -18,7 +18,7 @@ defmodule Snap.Application do
       # Start a worker by calling: Snap.Worker.start_link(arg)
       # {Snap.Worker, arg},
       # Start to serve requests, typically the last entry
-      SnapWeb.Endpoint,
+      SnapWeb.Endpoint
       # Snap.Runtime.Supervisor
     ]
 

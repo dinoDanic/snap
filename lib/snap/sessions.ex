@@ -13,37 +13,22 @@ defmodule Snap.Sessions do
 
   def invite_user_to_session(email, session_id) do
     user = Users.get_user_by_email(email)
-    session = Sessions.get_session(session_id)
 
-    attrs = %{user_id: user.id, session_id: session.id}
+    case user do
+      nil ->
+        IO.puts("TU SAAAAAAAAAAAAAAm 3")
+        {:error, "User not found"}
 
-    %SessionUser{}
-    |> SessionUser.changeset(attrs)
-    |> Repo.insert()
+      {:ok, user} ->
+        IO.puts("TU SAAAAAAAAAAAAAAm 4")
+        session = Sessions.get_session(session_id)
 
-    # case user do
-    #   {:ok, user} ->
-    #     IO.inspect(user)
+        attrs = %{user_id: user.id, session_id: session.id}
 
-    # session = get_session(86)
-
-    # IO.inspect(session)
-
-    # case session do
-    #   {:ok, session} -> IO.inspect(session)
-    #   {:error, err} -> IO.puts("errorrrrrrrrrrrrrrrrrrr")
-    #   nil -> IO.puts(~c"nill sesdion")
-    # end
-
-    # nil ->
-    #   IO.puts(~c"its nil")
-    # end
-
-    # case Users.get_user_by_email(email) do
-    #   {:ok, user} -> IO.inspect(user)
-    #   {:error, err} -> IO.inspect(err)
-    #   _ -> IO.puts(~c"error dole")
-    # end
+        %SessionUser{}
+        |> SessionUser.changeset(attrs)
+        |> Repo.insert()
+    end
   end
 
   def get_user_sessions(user_id) do

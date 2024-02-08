@@ -5,12 +5,12 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import { Input } from "$lib/components/ui/input";
 
-  export let inviteSession: (email: string) => void;
+  export let runCommand: (eventName: string, args?: object) => void;
+
   let value: string;
 
   const submit = () => {
-    if (value === "" || !value) return;
-    inviteSession(value);
+    runCommand("invite_session", { email: value });
   };
 </script>
 

@@ -93,4 +93,24 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
 
     {:noreply, update_socket}
   end
+
+  def invite_session(email, socket) do
+    session_id = socket.assigns.session.id
+
+    case Sessions.invite_user_to_session(email, session_id) do
+      {:ok, user} ->
+        socket =
+          socket
+          |> Phoenix.LiveView.put_flash(:ok, "Invited #{user.email} to session")
+
+        {:noreply, socket}
+
+      {:error, message} ->
+        socket =
+          socket
+          |> Phoenix.LiveView.put_flash(:error, message)
+
+        {:noreply, socket}
+    end
+  end
 end

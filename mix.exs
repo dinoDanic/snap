@@ -19,7 +19,7 @@ defmodule Snap.MixProject do
   def application do
     [
       mod: {Snap.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :eex, :wx, :observer, :runtime_tools]
     ]
   end
 

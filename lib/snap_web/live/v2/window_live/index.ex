@@ -61,4 +61,9 @@ defmodule SnapWeb.V2.WindowLive.Index do
   def handle_event("update_note", note, socket) do
     HandleEvents.update_note(note, socket)
   end
+
+  @impl true
+  def handle_event("invite_session", %{"email" => email}, socket) do
+    HandleEvents.invite_session(email, socket)
+  end
 end

@@ -16,13 +16,10 @@ defmodule Snap.Sessions do
 
     case user do
       nil ->
-        IO.puts("TU SAAAAAAAAAAAAAAm 3")
         {:error, "User not found"}
 
       {:ok, user} ->
-        IO.puts("TU SAAAAAAAAAAAAAAm 4")
         session = Sessions.get_session(session_id)
-
         attrs = %{user_id: user.id, session_id: session.id}
 
         %SessionUser{}

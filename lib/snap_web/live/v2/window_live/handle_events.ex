@@ -113,4 +113,8 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
         {:noreply, socket}
     end
   end
+
+  def logout(socket) do
+    {:noreply, push_redirect(socket, to: "/users/log_out")}
+  end
 end

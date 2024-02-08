@@ -5,6 +5,7 @@
   import { Live } from "live_svelte";
   import DeleteSession from "./events/delete-session.svelte";
   import InviteSession from "./events/invite-session.svelte";
+  import Logout from "./events/logout.svelte";
   // import ListSessions from "./events/list-sessions.svelte";
   import CreateWindow from "./events/create-window.svelte";
   import DeleteWindow from "./events/delete-window.svelte";
@@ -98,6 +99,9 @@
       <!-- <span>New Session</span> -->
       <!-- </Command.Item> -->
       <!-- <ListSessions {live} /> -->
+    </Command.Group>
+    <Command.Group heading="User">
+      <Logout {runCommand} />
     </Command.Group>
   </Command.List>
 </Command.Dialog>

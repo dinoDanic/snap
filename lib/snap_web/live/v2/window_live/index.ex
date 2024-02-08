@@ -66,4 +66,9 @@ defmodule SnapWeb.V2.WindowLive.Index do
   def handle_event("invite_session", %{"email" => email}, socket) do
     HandleEvents.invite_session(email, socket)
   end
+
+  @impl true
+  def handle_event("log_out", _params, socket) do
+    HandleEvents.logout(socket)
+  end
 end

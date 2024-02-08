@@ -19,7 +19,7 @@ defmodule Snap.Application do
       # {Snap.Worker, arg},
       # Start to serve requests, typically the last entry
       SnapWeb.Endpoint,
-      Snap.Runtime.Supervisor
+      # Snap.Runtime.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

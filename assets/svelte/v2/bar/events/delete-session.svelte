@@ -6,19 +6,19 @@
 
   export let runCommand: (eventName: string, args?: object) => void;
 
+  export let open: boolean = false;
+
   const submit = () => {
     runCommand("delete_session");
   };
-
 </script>
 
-<AlertDialog.Root>
-  <AlertDialog.Trigger class="w-full">
-    <Command.Item>
-      <TrashIcon class="mr-2 h-4 w-4" />
-      <span>Delete Session</span>
-    </Command.Item>
-  </AlertDialog.Trigger>
+<Command.Item onSelect={() => (open = !open)}>
+  <TrashIcon class="mr-2 h-4 w-4" />
+  <span>Delete Session</span>
+</Command.Item>
+
+<AlertDialog.Root {open}>
   <AlertDialog.Content>
     <AlertDialog.Header>
       <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>

@@ -8,19 +8,19 @@
   export let runCommand: (eventName: string, args?: object) => void;
 
   let value: string;
+  let open: boolean = false;
 
   const submit = () => {
     runCommand("invite_session", { email: value });
   };
 </script>
 
-<AlertDialog.Root>
-  <AlertDialog.Trigger class="w-full">
-    <Command.Item>
-      <UserPlusIcon class="mr-2 h-4 w-4" />
-      <span>Invite To Session</span>
-    </Command.Item>
-  </AlertDialog.Trigger>
+<Command.Item onSelect={() => (open = !open)}>
+  <UserPlusIcon class="mr-2 h-4 w-4" />
+  <span>Invite To Session</span>
+</Command.Item>
+
+<AlertDialog.Root {open}>
   <AlertDialog.Content>
     <form on:submit|preventDefault={submit} class="space-y-lg">
       <AlertDialog.Header>

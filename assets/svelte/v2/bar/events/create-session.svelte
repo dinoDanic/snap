@@ -11,5 +11,5 @@
 
 <Command.Item onSelect={submit}>
   <InspectionPanelIcon class="mr-2 h-4 w-4" />
-  <span>Create Session</span>
+  Create Session
 </Command.Item>

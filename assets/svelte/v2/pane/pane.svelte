@@ -7,13 +7,17 @@
 
   export let pane: Pane;
   export let live: Live;
+  export let command_open: boolean = false;
 
   $: focus_index = 0;
 
   const notes_length = pane.notes.length;
 
   const handleKeydown = (event: KeyboardEvent) => {
-    const directoion = vimKeyEvents(event);
+    if (command_open) return;
+
+    const directoion = vimKeyEvents.direction(event);
+
     if (directoion === "down") {
       event.preventDefault();
       if (focus_index < notes_length - 1) {
@@ -24,6 +28,9 @@
       if (focus_index !== 0) {
         focus_index -= 1;
       }
+    }
+    if (event.ctrlKey && event.key === "1") {
+      event.preventDefault();
     }
   };
 

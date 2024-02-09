@@ -11,7 +11,7 @@
   export let live: Live;
   export let pane: Pane;
 
-  let open = false;
+  export let command_open: boolean = false;
 
   const change_window = (index: number) => {
     const findWindow = session.windows.at(index);
@@ -19,32 +19,9 @@
       live.pushEvent("change_window", { window_id: findWindow.id });
     }
   };
-
-  // onMount(() => {
-  //   function handleKeydown(e: KeyboardEvent) {
-  //     if (open) return;
-  //     const { key } = e;
-  //     if (isStringANumber(key)) {
-  //       const keyIndex = Number(key) - 1;
-  //       const findWindow = session.windows.at(keyIndex);
-  //       if (findWindow) {
-  //         console.log(findWindow)
-  //         live.pushEvent("change_window", { window_id: findWindow.id });
-  //       }
-  //       //
-  //     } else {
-  //       //
-  //     }
-  //   }
-  //
-  //   document.addEventListener("keydown", handleKeydown);
-  //   return () => {
-  //     document.removeEventListener("keydown", handleKeydown);
-  //   };
-  // });
 </script>
 
-<div class="flex h-[40px] p-sm gap-sm">
+<div class="flex p-sm gap-sm">
   <Badge class="px-md" variant="secondary">
     {session.name}
   </Badge>
@@ -60,12 +37,7 @@
       />
     {/each}
   </div>
-  <button
-    on:click={() => {
-      // open = true;
-    }}
-    class="flex items-center"
-  >
+  <button class="flex items-center">
     <Badge variant="secondary">
       <CommandIcon class="w-2.5 h-2.5 mr-xs" />
       M
@@ -73,5 +45,4 @@
   </button>
 </div>
 
-<Command {open} {live} />
-<!-- <svelte:window on:keydown|preventDefault={_onkeyDown} /> -->
+<Command {command_open} {live} />

@@ -16,7 +16,6 @@
 
   function handleFocus() {
     isEditing = true;
-    // pogle zaka ovo ne radi
     focus_index = index;
     setTimeout(() => {
       if (inputRef) inputRef.focus();
@@ -36,14 +35,16 @@
   $: handleVimFocus(focus_index);
 
   $: htmlContent = marked(value);
+
   $: isH1 = value.startsWith("# ");
   $: isH2 = value.startsWith("## ");
   $: isH3 = value.startsWith("### ");
   $: isH4 = value.startsWith("#### ");
 
+  $: cssValue = value.match(/class="([^"]*)"/)?.[1];
+
   const onBlur = () => {
     isEditing = false;
-    console.log("value", value, note.note);
     if (value !== note.note || "") {
       live.pushEvent("update_note", { ...note, note: value });
     }
@@ -71,7 +72,7 @@
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
-    class={cn("text-white hover:bg-secondary/30", shareClass)}
+    class={cn("hover:bg-secondary/30", shareClass, cssValue)}
     tabindex={0}
     on:click={handleFocus}
     on:focus={handleFocus}

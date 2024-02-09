@@ -8,6 +8,7 @@
   export let runCommand: (eventName: string, args?: object) => void;
 
   let value: string;
+  let open: boolean = false;
 
   const submit = () => {
     if (value === "" || !value) return;
@@ -15,13 +16,12 @@
   };
 </script>
 
-<AlertDialog.Root>
-  <AlertDialog.Trigger class="w-full">
-    <Command.Item>
-      <LayoutPanelTopIcon class="mr-2 h-4 w-4" />
-      <span>Create Window</span>
-    </Command.Item>
-  </AlertDialog.Trigger>
+<Command.Item onSelect={() => open = !open}>
+  <LayoutPanelTopIcon class="mr-2 h-4 w-4" />
+  Create Window
+</Command.Item>
+
+<AlertDialog.Root {open}>
   <AlertDialog.Content>
     <form on:submit|preventDefault={submit} class="space-y-lg">
       <AlertDialog.Header>

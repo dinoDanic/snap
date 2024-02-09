@@ -32,6 +32,7 @@ defmodule SnapWeb.V2.WindowLive.HandleParams do
       |> assign(:session, session_to_svelte)
       |> assign(:window, window_to_svelte)
       |> assign(:pane, %{})
+      |> assign(:command_open, false)
 
     socket
   end

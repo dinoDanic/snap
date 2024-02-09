@@ -11,5 +11,5 @@
 
 <Command.Item onSelect={submit}>
   <LogOutIcon class="mr-2 h-4 w-4" />
-  <span>Logout</span>
+  Logout
 </Command.Item>

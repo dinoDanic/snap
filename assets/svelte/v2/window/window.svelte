@@ -9,7 +9,7 @@
   $: havePanes = win.panes.length > 0;
 </script>
 
-<div class="flex flex-wrap h-full">
+<div class="p-sm">
   {#if havePanes}
     {#each win.panes as pane}
       <Pane {pane} {live} />

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Badge } from "$lib/components/ui/badge";
-  import { ArrowRightIcon, DotIcon } from "lucide-svelte";
+  import { DotIcon } from "lucide-svelte";
   import type { Pane, Window } from "../../types";
   import { cn } from "$lib/utils";
 
@@ -22,8 +22,8 @@
   >
     <span class="mr-xs">{index + 1}.</span>
     <span class="truncate whitespace-nowrap max-w-[150px]"
-      >{windowItem.name}
-    </span>
+      >{windowItem.name}</span
+    >
   </Badge>
   {#if pane.id && isActive}
     <Badge variant="secondary" class="-ml-sm text-muted-foreground relative">

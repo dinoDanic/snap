@@ -1,6 +1,6 @@
 type Direction = "up" | "down" | "left" | "right";
 
-export const vimKeyEvents = (event: KeyboardEvent): Direction => {
+const direction = (event: KeyboardEvent): Direction | null => {
   if (
     (event.ctrlKey && event.key === "n") ||
     (event.ctrlKey && event.key === "j") ||
@@ -14,4 +14,9 @@ export const vimKeyEvents = (event: KeyboardEvent): Direction => {
   ) {
     return "up";
   }
+  return null
+}
+
+export const vimKeyEvents = {
+  direction,
 };

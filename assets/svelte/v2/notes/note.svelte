@@ -3,6 +3,11 @@
   import { cn } from "$lib/utils";
   import { Note } from "$lib/types";
   import { Live } from "live_svelte";
+  import {
+    prepareContent,
+    calculateImportanceLevel,
+  } from "./fns/prepare-content";
+  import ImportanceLevel from "./components/importance-level.svelte";
 
   let inputRef: HTMLInputElement;
   let isEditing = false;
@@ -34,14 +39,19 @@
 
   $: handleVimFocus(focus_index);
 
-  $: htmlContent = marked(value);
+  $: htmlContent = marked(prepareContent(value));
 
   $: isH1 = value.startsWith("# ");
   $: isH2 = value.startsWith("## ");
   $: isH3 = value.startsWith("### ");
   $: isH4 = value.startsWith("#### ");
 
-  $: cssValue = value.match(/class="([^"]*)"/)?.[1];
+  $: importanceLevel = calculateImportanceLevel(value);
+
+  let item =
+    "bg-red-200 bg-red-400 text-red-200 text-primary hover:opacity-50 hover:text-red-200";
+
+  $: cssValue = value.match(/:"([^"]*)"/)?.[1];
 
   const onBlur = () => {
     isEditing = false;
@@ -78,6 +88,7 @@
     on:focus={handleFocus}
     aria-label="Edit content"
   >
+    <ImportanceLevel {importanceLevel} />
     {@html htmlContent}
   </div>
 {/if}

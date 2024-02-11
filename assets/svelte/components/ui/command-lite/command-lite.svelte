@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
   import { note_settings } from "$lib/v2/note/settings";
   import DynamicGroup from "./groups/dynamic-group.svelte";
-  import { text_colors, text_sizes } from "./css";
+  import { css_groups } from "./css";
 
   export let live: Live;
   export let note: Note;
@@ -32,24 +32,15 @@
     <Command.Input autofocus placeholder="example: color blue" />
     <Command.List>
       <Command.Empty>No results found.</Command.Empty>
-      <DynamicGroup
-        heading="Colors"
-        css_definitions={text_colors}
-        bind:text_content
-        {focusEditableDiv}
-        {note}
-        {live}
-        decorator
-      />
-      <DynamicGroup
-        heading="Text"
-        css_definitions={text_sizes}
-        bind:text_content
-        {focusEditableDiv}
-        {note}
-        {live}
-        decorator
-      />
+      {#each css_groups as css_group}
+        <DynamicGroup
+          bind:text_content
+          {focusEditableDiv}
+          {css_group}
+          {note}
+          {live}
+        />
+      {/each}
       <Command.Separator />
     </Command.List>
   </Command.Root>

@@ -40,8 +40,8 @@
           {note}
           {live}
         />
+        <Command.Separator />
       {/each}
-      <Command.Separator />
     </Command.List>
   </Command.Root>
 </div>

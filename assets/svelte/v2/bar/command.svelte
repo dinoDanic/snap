@@ -11,6 +11,7 @@
 
   export let command_open = false;
   export let live: Live;
+
   $: open = command_open;
 
   onMount(() => {

@@ -66,7 +66,7 @@ defmodule Snap.Panes do
 
     Repo.transaction(fn ->
       {:ok, pane} = Repo.insert(pane_changeset)
-      note_attrs = %{"note" => "# This is h1"}
+      note_attrs = %{"note" => "Title", "class" => ["text-3xl", "font-bold"]}
       Notes.create_note(note_attrs, pane)
 
       1..4

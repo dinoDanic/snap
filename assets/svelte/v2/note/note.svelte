@@ -7,12 +7,25 @@
 
   export let note: Note;
   export let live: Live;
+  export let focus_index: number;
+  export let index: number;
 
   let editableDiv: HTMLElement;
 
   let text_content = note.note || "";
 
-  $: isActionTime = text_content.includes(note_settings.action_time_trigger);
+  $: is_action_time = text_content.includes(note_settings.action_time_trigger);
+
+  function handleVimFocus(focus_index: number) {
+    const isActive = index === focus_index;
+    if (isActive) {
+      setTimeout(() => {
+        if (editableDiv) focusEditableDiv();
+      }, 0);
+    }
+  }
+
+  $: handleVimFocus(focus_index);
 
   function setCursorToEnd(node: HTMLElement) {
     const setSelectionRange = () => {
@@ -56,10 +69,11 @@
   bind:this={editableDiv}
   class={cn("focus:outline-none py-sm", note.class)}
   contenteditable="true"
+  placeholder="kita"
   use:setCursorToEnd
   bind:textContent={text_content}
   on:blur={on_blur}
 />
-{#if isActionTime}
+{#if is_action_time}
   <CommandLite {focusEditableDiv} bind:text_content {note} {live} />
 {/if}

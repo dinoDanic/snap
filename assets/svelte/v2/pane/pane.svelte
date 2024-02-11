@@ -1,19 +1,18 @@
 <script lang="ts">
   import { Pane } from "$lib/types";
   import { Live } from "live_svelte";
-  import Note1 from "../notes1/note1.svelte";
   import Note from "../note/note.svelte";
-  import { onMount } from "svelte";
-  import { vimKeyEvents } from "../../vim-key-events";
+  // import { onMount } from "svelte";
+  // import { vimKeyEvents } from "../../vim-key-events";
 
   export let pane: Pane;
   export let live: Live;
-  export let command_open: boolean = false;
+  // export let command_open: boolean = false;
 
   $: focus_index = 0;
 
   // const notes_length = pane.notes.length;
-
+  //
   // const handleKeydown = (event: KeyboardEvent) => {
   //   if (command_open) return;
   //
@@ -45,11 +44,6 @@
 
 <div class="p-md">
   {#each pane.notes as note, index}
-    <Note {note} {live} />
+    <Note {index} {focus_index} {note} {live} />
   {/each}
-  <!-- v1 -->
-  <!-- <hr /> -->
-  <!-- {#each pane.notes as note, index} -->
-  <!--   <Note1 {focus_index} {note} {index} {live} /> -->
-  <!-- {/each} -->
 </div>

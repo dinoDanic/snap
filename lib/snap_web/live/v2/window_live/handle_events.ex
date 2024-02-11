@@ -123,7 +123,6 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
     {:noreply, push_redirect(socket, to: "/users/log_out")}
   end
 
-  @spec command_open(boolean, Phoenix.LiveView.Socket.t()) :: Phoenix.LiveView.Socket.t()
   def command_open(state, socket) do
     {:noreply, assign(socket, :command_open, state)}
   end

@@ -31,8 +31,26 @@ export const text_sizes: CssDefinition[] = [
   { value: "text-md", label: "Paragraph" }
 ]
 
+
+export const font_weights: CssDefinition[] = [
+  { value: "font-bold", label: "Bold" },
+  { value: "font-medium", label: "Medium" },
+  { value: "font-normal", label: "Normal" },
+  { value: "font-light", label: "Light" }
+]
+
+
+export const text_decorators: CssDefinition[] = [
+  { value: "underline", label: "Underline" },
+  { value: "overline", label: "Overline" },
+  { value: "line-through", label: "Through" },
+  { value: "no-underline", label: "Normal" }
+]
+
 export const css_groups: CssGroup[] = [
   { heading: "Colors", css_definitions: text_colors, decorator: true, key: "color" },
+  { heading: "Weight", css_definitions: font_weights, decorator: true, key: "weight" },
+  { heading: "Decorators", css_definitions: text_decorators, decorator: true, key: "decorators" },
   { heading: "Text", css_definitions: text_sizes, decorator: false, key: "text" },
 ]
 

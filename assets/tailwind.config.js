@@ -15,6 +15,7 @@ module.exports = {
     "../lib/snap_web.ex",
     "../lib/snap_web/**/*.*ex",
     "./svelte/**/*.svelte",
+    "./svelte/**/*.ts",
     "./src/**/*.{html,js,svelte,ts}",
   ],
   darkMode: ["class"],

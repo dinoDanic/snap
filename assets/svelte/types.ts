@@ -18,6 +18,7 @@ export type Pane = {
 
 export type Note = {
   note: string | null;
+  class?: string[] | null
 };
 
 

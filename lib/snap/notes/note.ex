@@ -4,6 +4,8 @@ defmodule Snap.Notes.Note do
 
   schema "notes" do
     field :note, :string
+    field :class, {:array, :string}
+
     belongs_to :pane, Snap.Panes.Pane
 
     timestamps(type: :utc_datetime)
@@ -12,7 +14,7 @@ defmodule Snap.Notes.Note do
   @doc false
   def changeset(note, attrs) do
     note
-    |> cast(attrs, [:note])
+    |> cast(attrs, [:note, :class])
     |> validate_required([])
   end
 end

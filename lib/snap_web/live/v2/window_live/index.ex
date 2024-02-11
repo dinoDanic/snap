@@ -67,4 +67,9 @@ defmodule SnapWeb.V2.WindowLive.Index do
   @impl true
   def handle_event("command_open", %{"state" => state}, socket),
     do: HandleEvents.command_open(state, socket)
+
+  @impl true
+  def handle_event("add_css_to_note", %{"css" => css, "note_id" => note_id}, socket) do
+    HandleEvents.add_css_to_note(css, note_id, socket)
+  end
 end

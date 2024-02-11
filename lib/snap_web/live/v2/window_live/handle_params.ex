@@ -57,7 +57,8 @@ defmodule SnapWeb.V2.WindowLive.HandleParams do
 
     pane = Panes.get_pane!(pane_id) |> Repo.preload(:notes)
 
-    notes_to_svelte = Enum.map(pane.notes, fn note -> %{note: note.note, id: note.id} end)
+    notes_to_svelte =
+      Enum.map(pane.notes, fn note -> %{note: note.note, id: note.id, class: note.class} end)
 
     pane_to_svelte = %{id: pane.id, name: pane.name, notes: notes_to_svelte}
 

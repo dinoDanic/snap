@@ -69,14 +69,19 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
     {:noreply, push_patch(socket, to: "/v2/s/#{session.id}/w/#{window.id}/p/#{pane_id}")}
   end
 
-  def update_note(%{"id" => note_id, "note" => new_note}, socket) do
-    IO.inspect(socket.assigns)
+  def update_note(args, socket) do
     active_pane = socket.assigns.pane
+
+    IO.puts("OVOOOOOOOOOOOOOOOOOOO")
+    IO.inspect(args)
+    IO.inspect(active_pane)
+
+    %{"id" => note_id, "note" => note_text, "class" => class} = args
 
     update_notes =
       Enum.map(active_pane.notes, fn note ->
         if note.id == note_id do
-          %{note | note: new_note}
+          %{note | note: note_text, class: class}
         else
           note
         end
@@ -88,7 +93,7 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
 
     Task.start(fn ->
       get_note = Notes.get_note!(note_id)
-      Notes.update_note(get_note, %{note: new_note})
+      Notes.update_note(get_note, args)
     end)
 
     {:noreply, update_socket}

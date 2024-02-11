@@ -5,7 +5,7 @@ defmodule Snap.Panes.Pane do
   schema "panes" do
     field :name, :string
     belongs_to :window, Snap.Windows.Window
-    has_many :notes, Snap.Notes.Note
+    has_many(:notes, Snap.Notes.Note, preload_order: [desc: :id])
 
     timestamps(type: :utc_datetime)
   end

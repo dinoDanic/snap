@@ -8,6 +8,21 @@ defmodule Snap.Notes do
 
   alias Snap.Notes.Note
 
+  def add_css_to_note(note_id, css) do
+    note = get_note!(note_id)
+
+    case note do
+      {:ok, note} ->
+        IO.puts("ok")
+
+        note
+        |> update_note(%{css: css})
+
+      nil ->
+        IO.puts("no note")
+    end
+  end
+
   @doc """
   Returns the list of notes.
 

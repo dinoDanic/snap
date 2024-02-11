@@ -3,7 +3,7 @@ const remove_action_time_trigger = (text_content: string) => {
 }
 
 export const note_settings = {
-  action_time_trigger: ">",
+  action_time_trigger: "/",
   remove_action_time_trigger: remove_action_time_trigger
 } as const
 

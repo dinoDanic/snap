@@ -1,10 +1,11 @@
 <script lang="ts">
   import * as Command from "$lib/components/ui/command";
-  import GroupColors from "./groups/group-colors.svelte";
   import { Note } from "$lib/types";
   import { Live } from "live_svelte";
   import { onMount } from "svelte";
   import { note_settings } from "$lib/v2/note/settings";
+  import DynamicGroup from "./groups/dynamic-group.svelte";
+  import { text_colors, text_sizes } from "./css";
 
   export let live: Live;
   export let note: Note;
@@ -31,7 +32,24 @@
     <Command.Input autofocus placeholder="example: color blue" />
     <Command.List>
       <Command.Empty>No results found.</Command.Empty>
-      <GroupColors {focusEditableDiv} bind:text_content {note} {live} />
+      <DynamicGroup
+        heading="Colors"
+        css_definitions={text_colors}
+        bind:text_content
+        {focusEditableDiv}
+        {note}
+        {live}
+        decorator
+      />
+      <DynamicGroup
+        heading="Text"
+        css_definitions={text_sizes}
+        bind:text_content
+        {focusEditableDiv}
+        {note}
+        {live}
+        decorator
+      />
       <Command.Separator />
     </Command.List>
   </Command.Root>

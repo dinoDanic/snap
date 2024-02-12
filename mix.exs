@@ -53,7 +53,8 @@ defmodule Snap.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
-      {:live_svelte, "~> 0.13.0"}
+      {:live_svelte, "~> 0.13.0"},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 

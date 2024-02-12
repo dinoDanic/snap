@@ -4,11 +4,10 @@
   import { cn } from "$lib/utils";
   import { Live } from "live_svelte";
   import { note_settings } from "./settings";
+  import { onMount } from "svelte";
 
   export let note: Note;
   export let live: Live;
-  export let focus_index: number;
-  export let index: number;
 
   let editableDiv: HTMLElement;
 
@@ -16,43 +15,7 @@
 
   $: is_action_time = text_content.includes(note_settings.action_time_trigger);
 
-  function handleVimFocus(focus_index: number) {
-    const isActive = index === focus_index;
-    if (isActive) {
-      setTimeout(() => {
-        if (editableDiv) focusEditableDiv();
-      }, 0);
-    }
-  }
-
-  $: handleVimFocus(focus_index);
-
-  function setCursorToEnd(node: HTMLElement) {
-    const setSelectionRange = () => {
-      const range = document.createRange();
-      const sel = window.getSelection();
-
-      if (sel) {
-        range.selectNodeContents(node);
-        range.collapse(false); // false to collapse the range to its end point
-
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-    };
-
-    node.addEventListener("focus", setSelectionRange);
-
-    return {
-      destroy() {
-        node.removeEventListener("focus", setSelectionRange);
-      },
-    };
-  }
-
-  function focusEditableDiv() {
-    editableDiv.focus();
-  }
+  const focusEditableDiv = () => editableDiv.focus();
 
   const on_blur = () => {
     if (text_content !== note.note || "") {
@@ -63,17 +26,44 @@
       live.pushEvent("update_note", { ...note, note: text_content });
     }
   };
+
+  function handleKeyDown(e: KeyboardEvent): void {
+    if (e.key === "Enter") {
+      console.log("enter");
+    } else if (e.key === "Backspace" && text_content === "") {
+      console.log("delete_note");
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  });
 </script>
 
-<div
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<!-- <div -->
+<!--   bind:this={editableDiv} -->
+<!--   class={cn("focus:outline-none focus:translate-x-1 transition-transform py-sm", note.class)} -->
+<!--   contenteditable="true" -->
+<!--   placeholder="Type here..." -->
+<!--   use:set_cursor_to_end -->
+<!--   bind:textContent={text_content} -->
+<!--   on:blur={on_blur} -->
+<!-- /> -->
+
+<input
+  bind:value={text_content}
   bind:this={editableDiv}
-  class={cn("focus:outline-none py-sm", note.class)}
-  contenteditable="true"
-  placeholder="kita"
-  use:setCursorToEnd
-  bind:textContent={text_content}
   on:blur={on_blur}
+  class={cn(
+    "w-full bg-transparent focus:outline-none focus:translate-x-1 transition-transform py-sm",
+    note.class,
+  )}
 />
+
 {#if is_action_time}
   <CommandLite {focusEditableDiv} bind:text_content {note} {live} />
 {/if}

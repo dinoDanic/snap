@@ -1,9 +1,0 @@
-<.flash_group flash={@flash} />
-<div class="grid h-[100vh] grid-cols-1 grid-rows-[1fr_40px] overflow-auto">
-  <div>
-    <%= @inner_content %>
-  </div>
-  <div>
-    <.svelte name="v2/bar/bar" props={%{session: @session, win: @window, pane: @pane, command_open: @command_open}} />
-  </div>
-</div>

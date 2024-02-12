@@ -3,7 +3,7 @@ defmodule Snap.Utils do
     struct
     |> Map.from_struct()
     |> Enum.reduce(%{}, fn
-      {key, %Ecto.Association.NotLoaded{}}, acc -> acc
+      {_key, %Ecto.Association.NotLoaded{}}, acc -> acc
       {key, value}, acc -> Map.put(acc, key, remove_unloaded_associations(value))
     end)
   end

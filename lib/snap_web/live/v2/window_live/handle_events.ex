@@ -72,10 +72,6 @@ defmodule SnapWeb.V2.WindowLive.HandleEvents do
   def update_note(args, socket) do
     active_pane = socket.assigns.pane
 
-    IO.puts("OVOOOOOOOOOOOOOOOOOOO")
-    IO.inspect(args)
-    IO.inspect(active_pane)
-
     %{"id" => note_id, "note" => note_text, "class" => class} = args
 
     update_notes =

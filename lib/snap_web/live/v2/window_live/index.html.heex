@@ -1,0 +1,17 @@
+<div class="grid h-[100vh] grid-cols-1 grid-rows-[1fr_40px] overflow-auto">
+  <div>
+    <%= if @page == :window do %>
+      <.svelte name="v2/window/window" props={%{win: @window}} class="h-full" />
+    <% end %>
+    <%= if @page == :pane do %>
+      <.svelte name="v2/pane/pane" props={%{pane: @pane, command_open: @command_open}} />
+    <% end %>
+  </div>
+  <div>
+    <.svelte
+      name="v2/bar/bar"
+      props={%{session: @session, win: @window, pane: @pane, command_open: @command_open}}
+    />
+  </div>
+</div>
+<.svelte name="v2/key_events/key_events" />

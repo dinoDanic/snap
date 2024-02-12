@@ -1,20 +1,8 @@
 defmodule SnapWeb.V2.WindowLive.Index do
   alias SnapWeb.V2.WindowLive.HandleParams
   alias SnapWeb.V2.WindowLive.HandleEvents
-  use SnapWeb, :app_live_view
+  use SnapWeb, :live_view
   use LiveSvelte.Components
-
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <%= if @page == :window do %>
-      <.svelte name="v2/window/window" props={%{win: @window}} class="h-full" />
-    <% end %>
-    <%= if @page == :pane do %>
-      <.svelte name="v2/pane/pane" props={%{pane: @pane, command_open: @command_open}} />
-    <% end %>
-    """
-  end
 
   @impl true
   def handle_params(
@@ -67,9 +55,4 @@ defmodule SnapWeb.V2.WindowLive.Index do
   @impl true
   def handle_event("command_open", %{"state" => state}, socket),
     do: HandleEvents.command_open(state, socket)
-
-  @impl true
-  def handle_event("add_css_to_note", %{"css" => css, "note_id" => note_id}, socket) do
-    HandleEvents.add_css_to_note(css, note_id, socket)
-  end
 end

@@ -8,21 +8,6 @@ defmodule Snap.Notes do
 
   alias Snap.Notes.Note
 
-  def add_css_to_note(note_id, css) do
-    note = get_note!(note_id)
-
-    case note do
-      {:ok, note} ->
-        IO.puts("ok")
-
-        note
-        |> update_note(%{css: css})
-
-      nil ->
-        IO.puts("no note")
-    end
-  end
-
   @doc """
   Returns the list of notes.
 
@@ -64,6 +49,7 @@ defmodule Snap.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
+  @spec create_note(map(), %Snap.Panes.Pane{}) :: {:ok, %Snap.Notes.Note{}} | {:error, Ecto.Changeset.t()}
   def create_note(attrs \\ %{}, pane) do
     %Note{}
     |> Note.changeset(attrs)
